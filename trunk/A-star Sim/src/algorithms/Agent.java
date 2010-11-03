@@ -1,5 +1,9 @@
 package algorithms;
-
+/**
+ * container class for the agents start,end and current position
+ * @author amit
+ *
+ */
 public class Agent {
 	
 	private Point _start;
