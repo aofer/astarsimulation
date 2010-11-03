@@ -7,14 +7,23 @@ import java.util.Vector;
 
 import maps.Mover;
 import maps.TileBasedMap;
-
+/**
+ * implements the path finder interface
+ * uses a multi-agent A* to calculate the paths for all moving objects in the simulation
+ * @author amit
+ *
+ */
 public class AStarPathFinder implements PathFinderInterface {
 	
 	private TileBasedMap _map;
 	private Vector<State> _closedList;
 	private PriorityQueue<State> _openList;
 	private HeuristicInterface _heuristic;
-	
+	/**
+	 * constructor
+	 * @param map
+	 * @param heuristic
+	 */
 	public AStarPathFinder(TileBasedMap map,HeuristicInterface heuristic){
 		this._map = map;
 		this._heuristic = heuristic;
@@ -23,6 +32,10 @@ public class AStarPathFinder implements PathFinderInterface {
 		
 	}
 	@Override
+	/**
+	 * calculates the paths for all moving objects in the search according
+	 * to the A* algorithm
+	 */
 	public Vector<State> findPath(Vector<Mover> movers, Vector<Point> starts,
 			Vector<Point> ends) {
 		State initialState = new State(starts);
@@ -56,10 +69,26 @@ public class AStarPathFinder implements PathFinderInterface {
 		//TODO pathfinding and reconsturcting after the algorithm finished
 		return null;
 	}
+	/**
+	 * returns the heuristic cost from the state with start positions start
+	 * to the end points in ends
+	 * @param movers - the type of moving object
+	 * @param starts - the vector containing the current positions of all agents
+	 * @param ends - the vector containing the goal positions of all agents
+	 * @return
+	 */
 	private float getHeuristicCost(Vector<Mover> movers,
 			Vector<Point> starts, Vector<Point> ends) {
 		return this._heuristic.getCost(this._map,movers,starts,ends);
 	}
+	/**
+	 * calculate the cost of the start positions of all agents to the positions 
+	 * saved in state
+	 * @param movers - the moving objects
+	 * @param current - the current positions of all agents in the search
+	 * @param st - the goal positions of all agents in the search
+	 * @return the sum of the costs for all agents
+	 */
 	private float getMovementCost(Vector<Mover> movers, State current, State st) {
 		float ans = 0;
 		for (int i = 0;i < current.get_Coordinates().size();i++){
@@ -73,6 +102,7 @@ public class AStarPathFinder implements PathFinderInterface {
 	}
 	/**
 	 * finds all valid neighbours of state.
+	 * calculates all the permutations of each of the agents' possible moves
 	 * @param state
 	 * @return
 	 */

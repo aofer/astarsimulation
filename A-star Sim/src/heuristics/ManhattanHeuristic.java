@@ -7,7 +7,9 @@ import maps.TileBasedMap;
 import algorithms.Point;
 
 public class ManhattanHeuristic implements HeuristicInterface {
-
+	/**
+	 * the sum of all Manhattan values for all agents in the search
+	 */
 	@Override
 	public float getCost(TileBasedMap map, Vector<Mover> movers,
 			Vector<Point> start, Vector<Point> ends) {

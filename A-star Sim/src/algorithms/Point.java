@@ -1,6 +1,10 @@
 package algorithms;
 
-
+/**
+ * a representation of coordinates in the tiled based map
+ * @author amit ofer & liron katav
+ *
+ */
 
 public class Point {
 	/** The x coordinate at the given step */
