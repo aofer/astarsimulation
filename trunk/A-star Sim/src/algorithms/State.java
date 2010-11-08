@@ -70,4 +70,21 @@ public class State implements Comparable<State>{
 		}
 		return ans;
 	}
+	public String toString(){
+		String ans = "";
+		ans +=  "Current position: <";
+		for ( Point p : this._Coordinates){
+			ans += p.toString();
+		}
+		ans += ">\nParent: ";
+		if (this._parent == null){
+			ans += "null";
+		}
+		else{
+			ans += this._parent.toString();
+		}
+		ans += "\nCost: " + this._cost;
+		ans += "\nHeuristic: " + this._heuristic;
+		return ans;
+	}
 }

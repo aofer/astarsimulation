@@ -1,5 +1,10 @@
 package maps;
 
+import java.util.Vector;
+
+import algorithms.Point;
+import algorithms.State;
+
 /**
  * The description for the data we're pathfinding over. This provides the contract
  * between the data being searched (i.e. the in game map) and the path finding
@@ -58,4 +63,6 @@ public interface TileBasedMap {
 	 * @return The relative cost of moving across the given tile
 	 */
 	public float getCost(Mover mover, int sx, int sy, int tx, int ty);
+
+	public Vector<Point> getAllMoves(Mover mover, Point p);
 }
