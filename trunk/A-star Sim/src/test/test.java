@@ -51,7 +51,12 @@ public class test {
 		ends.add(p4);
 		ends.add(p5);
 		System.out.println("trying the A star:\n");
-		pathfinder.findPath(movers, coordinates, ends);
+		Vector<State> path = pathfinder.findPath(movers, coordinates, ends);
+		
+		System.out.println("Path size is: " + path.size() +"\n");
+		for (State state : path){
+			System.out.println(state.toString());
+		}
 
 	}
 
