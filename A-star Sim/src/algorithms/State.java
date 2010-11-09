@@ -21,6 +21,13 @@ public class State implements Comparable<State>{
 		this._parent = null;
 	}
 	
+	public State(State state) {
+		this._Coordinates = (Vector<Point>)state.get_Coordinates().clone();
+		this._cost = state.get_cost();
+		this._heuristic = state.get_heuristic();
+		this._parent = state.get_parent();
+	}
+
 	public void set_state(Vector<Point> _state) {
 		this._Coordinates = _state;
 	}

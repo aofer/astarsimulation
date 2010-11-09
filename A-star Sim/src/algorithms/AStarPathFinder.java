@@ -40,9 +40,10 @@ public class AStarPathFinder implements PathFinderInterface {
 			Vector<Point> ends) {
 		State initialState = new State(starts);
 		State finalState = new State(ends);
+		State current = null;
 		this._openList.add(initialState);
 		while (this._openList.size() != 0){
-			State current = this._openList.poll();
+			current = this._openList.poll();
 			System.out.println(current.toString());
 			if (current.equals(finalState)){
 				break;
@@ -69,7 +70,15 @@ public class AStarPathFinder implements PathFinderInterface {
 			}
 		}
 		//TODO pathfinding and reconsturcting after the algorithm finished
-		return null;
+		Vector<State> path = new Vector<State>();
+		if (current != null && current.equals(finalState)){
+			while (!current.equals(initialState)){
+				path.add(current);
+				current = current.get_parent();
+			}
+
+		}
+		return path;
 	}
 	/**
 	 * returns the heuristic cost from the state with start positions start
@@ -108,6 +117,7 @@ public class AStarPathFinder implements PathFinderInterface {
 	 * @param state
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public Vector<State> getNeighbours(State state,Vector<Mover> movers){
 		if (state.get_Coordinates().size() == 1){
 			Vector<Point> moves =  this._map.getAllMoves(movers.elementAt(0),state.get_Coordinates().elementAt(0));
@@ -121,10 +131,14 @@ public class AStarPathFinder implements PathFinderInterface {
 		}
 		else{
 			Vector<State> res = new Vector<State>();
-			Point tPoint = state.get_Coordinates().remove(state.get_Coordinates().size() - 1);
-			Mover mover = movers.remove(movers.size() - 1);
+			//Point tPoint = state.get_Coordinates().remove(state.get_Coordinates().size() - 1);
+			State tState = new State(state);
+			Point tPoint = tState.get_Coordinates().remove(tState.get_Coordinates().size() - 1);
+	//		Mover mover = movers.remove(movers.size() - 1);
+			Mover mover = movers.get(movers.size() - 1);
+			Vector<Mover> tMovers = (Vector<Mover>)movers.clone();	//clone method is not type safe
 			Vector<Point> moves = this._map.getAllMoves(mover, tPoint);
-			Vector<State> tStates = getNeighbours(state, movers);
+			Vector<State> tStates = getNeighbours(tState, tMovers);
 			for (Point p : moves){
 				for (State s : tStates){
 					Vector<Point> tCoordinates = new Vector<Point>(s.get_Coordinates());
