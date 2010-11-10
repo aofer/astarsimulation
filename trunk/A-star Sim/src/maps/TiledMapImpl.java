@@ -19,6 +19,11 @@ public class TiledMapImpl implements TileBasedMap {
 		this._width =  width;
 		this._height = height;
 		this._tiles = new Tile[_width][_height];
+		for (int i = 0;i < this._tiles.length;i++){
+			for (int j = 0; j < this._tiles[i].length;j++){
+				this._tiles[i][j] = new Tile();
+			}
+		}
 		this._diagonal = diagonal;
 	}
 	@Override
@@ -38,9 +43,8 @@ public class TiledMapImpl implements TileBasedMap {
 	}
 
 	@Override
-	public boolean blocked(Mover mover, int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean blocked(Mover mover, int x, int y) {	
+		return !(this._tiles[x][y].get_status() == TileStatus.free);
 	}
 
 	@Override
@@ -53,11 +57,14 @@ public class TiledMapImpl implements TileBasedMap {
 	public Vector<Point> getAllMoves(Mover mover, Point p) {
 		Vector<Point> res = new Vector<Point>();
 		for (int i = p.getX() - 1; i <= p.getX() + 1;i++){
-			for (int j = p.getY()- 1; i <= p.getY() + 1;j++){
+			for (int j = p.getY()- 1; j <= p.getY() + 1;j++){
 				if (i == p.getX() || j == p.getY() || this._diagonal == true){
 					if (inMap(i,j) && !blocked(mover,i,j)){
 						Point tPoint = new Point(i,j);
-						res.add(tPoint);
+						//for debugging canceled the stay in one place
+						if (!(i == p.getX() && j == p.getY()))
+							res.add(tPoint);
+						
 					}
 				}
 			}
@@ -67,5 +74,13 @@ public class TiledMapImpl implements TileBasedMap {
 	private boolean inMap(int i, int j) {
 		return  i >= 0 && i <this._width && j >=0 && j < this._height;
 	}
-
+	public void setTile(int x,int y,TileStatus status,float cost){
+		Tile tTile = this._tiles[x][y];
+		tTile.set_status(status);
+		tTile.set_cost(cost);
+	}
+	public void setTile(int x, int y,TileStatus status){
+		Tile tTile = this._tiles[x][y];
+		tTile.set_status(status);
+	}
 }
