@@ -23,51 +23,46 @@ import javax.swing.JPopupMenu;
  */
 public class Cell extends Component implements ActionListener {
 
-    public static final int AGENT_1 = 1, AGENT_2 = 2;
+	public static enum Agents{
+		Agent1,Agent2;
+	}
+	
+	public static enum Status{
+		Empty,Start,Finish,Blocked,inOpenList,inClosedList;
+	}
+
+	
     //fields
     private Point _position;
-    private boolean _isStart = false;
-    private boolean _isFinish = false;
-    private boolean _isBlocked = false;
-    private double _distFromStart = -1;
-    private double _distFromFinish = -1;
-    private static int _Agent = AGENT_1;
-    private JPopupMenu _popup;
-    private JMenuItem _mSetStart, _mSetEnd, _mSetBlock;
+    private Status _status ;
+    private double _distFromStart;
+    private double _distFromFinish ;
+    private Agents _Agent_num ;
 
-    ;
-
-    //constractor
-    public Cell() {
+    //Constructor
+    public Cell(Point p) {
+    	this._position = p;
         init();
     }
 
-    //constractor
-    public Cell(boolean block) {
+    //Constructor
+    public Cell(Point p, boolean block) {
+    	this._position = p;       
         init();
-        this._isBlocked = block;
+        this.set_status(Status.Blocked);
     }
 
     private void init() {
-
-        // Create some menu items for the popup
-        _mSetStart = new JMenuItem("Set Start");
-        _mSetEnd = new JMenuItem("Set end");
-        _mSetBlock = new JMenuItem("Set Block");
-        // Create a popup menu
-        _popup = new JPopupMenu();
-        _popup.add(_mSetStart);
-        _popup.add(_mSetEnd);
-        _popup.add(_mSetBlock);
+    	this.set_status(Status.Empty);
+        this._distFromStart =  -1;
+        this._distFromFinish = -1;
+        this._Agent_num = Agents.Agent1; //default
 
         // Action and mouse listener support
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-        _mSetStart.addActionListener(this);
-        _mSetEnd.addActionListener(this);
-        _mSetBlock.addActionListener(this);
-
-        MouseListener popupListener = new PopupListener(_popup);
-        this.addMouseListener(popupListener);
+        
+        MouseListener mouseOnCell = new MouseOnCell();
+        this.addMouseListener(mouseOnCell);
 
     }
 
@@ -86,48 +81,6 @@ public class Cell extends Component implements ActionListener {
     }
 
     /**
-     * @return the _isStart
-     */
-    public boolean getIsStart() {
-        return _isStart;
-    }
-
-    /**
-     * @param isStart the _isStart to set
-     */
-    public void setIsStart(boolean isStart) {
-        this._isStart = isStart;
-    }
-
-    /**
-     * @return the _isFinish
-     */
-    public boolean getIsFinish() {
-        return _isFinish;
-    }
-
-    /**
-     * @param isFinish the _isFinish to set
-     */
-    public void setIsFinish(boolean isFinish) {
-        this._isFinish = isFinish;
-    }
-
-    /**
-     * @return the _isBlocked
-     */
-    public boolean getIsBlocked() {
-        return _isBlocked;
-    }
-
-    /**
-     * @param isBlocked the _isBlocked to set
-     */
-    public void setIsBlocked(boolean isBlocked) {
-        this._isBlocked = isBlocked;
-    }
-
-    /**
      * @return the _distFromStart
      */
     public double getDistFromStart() {
@@ -141,15 +94,23 @@ public class Cell extends Component implements ActionListener {
         this._distFromStart = distFromStart;
     }
 
+    
+    public void set_Agent_num(Agents _Agent_num) {
+		this._Agent_num = _Agent_num;
+	}
+
+	public Agents get_Agent_num() {
+		return _Agent_num;
+	}
     /**
      * @return the _distFromFinish
      */
     public double getDistFromFinish() {
         double ans;
-        if (this._isStart) {
+        if (this._status == Status.Start) {
             ans = 0;
         }
-        if (this._isBlocked) {
+        if (this._status == Status.Blocked) {
             ans = -1;
         } else {
             ans = this._distFromStart;
@@ -164,31 +125,25 @@ public class Cell extends Component implements ActionListener {
         this._distFromFinish = distFromFinish;
     }
 
-    /**
-     * @return the _Agent
-     */
-    public static int getAgent() {
-        return _Agent;
-    }
+    public void set_status(Status _status) {
+		this._status = _status;
+	}
 
-    /**
-     * @param aAgent the _Agent to set
-     */
-    public static void setAgent(int aAgent) {
-        _Agent = aAgent;
-    }
+	public Status get_status() {
+		return _status;
+	}
 
     @Override
     public void paint(Graphics g) {
         Dimension size = getSize();
         g.setColor(Color.white);
-        if (this._isStart) {
+        if (this._status == Status.Start) {
             g.setColor(Color.green);
         }
-        if (this._isFinish) {
+        if (this._status == Status.Finish) {
             g.setColor(Color.red);
         }
-        if (this._isBlocked) {
+        if (this._status == Status.Blocked) {
             g.setColor(Color.black);
         }
         g.fillRect(0, 0, size.width, size.height);
@@ -200,12 +155,13 @@ public class Cell extends Component implements ActionListener {
     public void processMouseEvent(MouseEvent event) {
         super.processMouseEvent(event);
         if (event.getID() == MouseEvent.MOUSE_CLICKED) {
-            System.out.println(event.getSource());
+            System.out.println( "mouse was clicked on " +  event.getSource());
         }
     }
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println(event.getSource());
+    	repaint();
     }
+    
 }//end of class Cell
 
