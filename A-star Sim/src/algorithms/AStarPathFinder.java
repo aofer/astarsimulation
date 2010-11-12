@@ -39,6 +39,7 @@ public class AStarPathFinder implements PathFinderInterface {
 	public Vector<State> findPath(Vector<Mover> movers, Vector<Point> starts,
 			Vector<Point> ends) {
 		State initialState = new State(starts);
+		initialState.set_heuristic(this._heuristic.getCost(_map, movers, starts, ends));
 		State finalState = new State(ends);
 		State current = null;
 		this._openList.add(initialState);

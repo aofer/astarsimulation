@@ -25,6 +25,9 @@ public class test2 {
 		map.setTile(2, 1, TileStatus.blocked);
 		map.setTile(0, 3, TileStatus.blocked);
 		map.setTile(1, 2, TileStatus.blocked);
+		map.setTile(3, 2, TileStatus.blocked);
+		map.setTile(4, 0, TileStatus.blocked);
+
 		Mover mover = new moverStub();
 		AStarPathFinder pathfinder = new AStarPathFinder(map, new ManhattanHeuristic());
 		Point p = new Point(4,4);
