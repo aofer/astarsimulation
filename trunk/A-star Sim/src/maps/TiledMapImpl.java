@@ -50,7 +50,7 @@ public class TiledMapImpl implements TileBasedMap {
 	@Override
 	public float getCost(Mover mover, int sx, int sy, int tx, int ty) {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class TiledMapImpl implements TileBasedMap {
 					if (inMap(i,j) && !blocked(mover,i,j)){
 						Point tPoint = new Point(i,j);
 						//for debugging canceled the stay in one place
-						if (!(i == p.getX() && j == p.getY()))
+				//		if (!(i == p.getX() && j == p.getY()))
 							res.add(tPoint);
 						
 					}
