@@ -2,7 +2,7 @@ package maps;
 
 import java.util.Vector;
 
-import algorithms.Point;
+import algorithms.myPoint;
 import algorithms.State;
 
 /**
@@ -64,5 +64,5 @@ public interface TileBasedMap {
 	 */
 	public float getCost(Mover mover, int sx, int sy, int tx, int ty);
 
-	public Vector<Point> getAllMoves(Mover mover, Point p);
+	public Vector<myPoint> getAllMoves(Mover mover, myPoint p);
 }

@@ -15,7 +15,7 @@ import org.junit.Test;
 import test.moverStub;
 
 import algorithms.AStarPathFinder;
-import algorithms.Point;
+import algorithms.myPoint;
 
 
 public class TileMapTest extends TestCase {
@@ -34,26 +34,26 @@ public class TileMapTest extends TestCase {
 	
 	public void testMoves(){
 		Mover mover1 = new moverStub();
-		Point p1 = new Point(4,1);
-		Point res1 = new Point(3,1);
-		Point res2 = new Point(4,2);
-		Vector<Point> moves = this._map.getAllMoves(mover1, p1);
-		Vector<Point> result = new Vector<Point>();
+		myPoint p1 = new myPoint(4,1);
+		myPoint res1 = new myPoint(3,1);
+		myPoint res2 = new myPoint(4,2);
+		Vector<myPoint> moves = this._map.getAllMoves(mover1, p1);
+		Vector<myPoint> result = new Vector<myPoint>();
 		result.add(res1);
 		result.add(p1);
 		result.add(res2);
 		AssertEquals(result,moves);
-		Point p2 = new Point (1,1);
-		Point res3 = new Point(1,0);
-		Point res4 = new Point(0,1);
-		Vector<Point> result2 = new Vector<Point>();
+		myPoint p2 = new myPoint (1,1);
+		myPoint res3 = new myPoint(1,0);
+		myPoint res4 = new myPoint(0,1);
+		Vector<myPoint> result2 = new Vector<myPoint>();
 		result2.add(res3);
 		result2.add(p2);
 		result2.add(res4);
 		AssertEquals(result2, this._map.getAllMoves(mover1, p2));
 		
 	}
-	public boolean AssertEquals(Vector<Point> expected,Vector<Point> actual){
+	public boolean AssertEquals(Vector<myPoint> expected,Vector<myPoint> actual){
 		boolean ans = true;
 		for (int i = 0; i < expected.size();i++){
 			if (!expected.elementAt(i).equals(actual.elementAt(i))){

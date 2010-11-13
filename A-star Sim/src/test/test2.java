@@ -5,7 +5,7 @@ import heuristics.ManhattanHeuristic;
 import java.util.Vector;
 
 import algorithms.AStarPathFinder;
-import algorithms.Point;
+import algorithms.myPoint;
 import algorithms.State;
 import maps.Mover;
 import maps.TileStatus;
@@ -28,19 +28,19 @@ public class test2 {
 
 		Mover mover = new moverStub();
 		AStarPathFinder pathfinder = new AStarPathFinder(map, new ManhattanHeuristic());
-		Point p = new Point(4,4);
-		Vector<Point> coordinates = new Vector<Point>();
+		myPoint p = new myPoint(4,4);
+		Vector<myPoint> coordinates = new Vector<myPoint>();
 		coordinates.add(p);
 		System.out.println("Start point is: " + p.toString());
-		Vector<Point> moves = map.getAllMoves(mover, p);
+		Vector<myPoint> moves = map.getAllMoves(mover, p);
 		System.out.println("All possible moves are:");
-		for (Point tPoint : moves){
+		for (myPoint tPoint : moves){
 			System.out.println(tPoint.toString());
 		}
 		Vector<Mover> movers = new Vector<Mover>();
 		movers.add(mover);
-		Point p4 = new Point(0,0);
-		Vector<Point> ends = new Vector<Point>();
+		myPoint p4 = new myPoint(0,0);
+		Vector<myPoint> ends = new Vector<myPoint>();
 		ends.add(p4);
 		System.out.println("trying the A star:\n");
 		Vector<State> path = pathfinder.findPath(movers, coordinates, ends);

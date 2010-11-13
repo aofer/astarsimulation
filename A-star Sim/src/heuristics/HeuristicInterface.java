@@ -1,7 +1,7 @@
 package heuristics;
 
 import java.util.Vector;
-import algorithms.Point;
+import algorithms.myPoint;
 import maps.Mover;
 import maps.TileBasedMap;
 /**
@@ -11,5 +11,5 @@ import maps.TileBasedMap;
  */
 public interface HeuristicInterface {
 	
-	public float getCost(TileBasedMap map, Vector<Mover> movers,Vector<Point> start,Vector<Point> ends);
+	public float getCost(TileBasedMap map, Vector<Mover> movers,Vector<myPoint> start,Vector<myPoint> ends);
 }
