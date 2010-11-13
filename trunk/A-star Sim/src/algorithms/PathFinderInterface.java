@@ -10,7 +10,7 @@ import maps.Mover;
  */
 public interface PathFinderInterface {
 	
-	public Vector<State> findPath(Vector<Mover> movers,Vector<Point> starts,Vector<Point> ends);
+	public Vector<State> findPath(Vector<Mover> movers,Vector<myPoint> starts,Vector<myPoint> ends);
 	
 	
 }

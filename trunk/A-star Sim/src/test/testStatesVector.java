@@ -3,7 +3,7 @@ package test;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-import algorithms.Point;
+import algorithms.myPoint;
 import algorithms.State;
 
 public class testStatesVector {
@@ -13,14 +13,14 @@ public class testStatesVector {
 	 */
 	public static void main(String[] args) {
 		
-		Point p1 = new Point(1,2);
-		Point p2 =new Point (1,2);
-		Point p3 = new Point (2,1);
-		Point p4 = new Point (2,1);
-		Vector<Point> v1 = new Vector<Point>();
+		myPoint p1 = new myPoint(1,2);
+		myPoint p2 =new myPoint (1,2);
+		myPoint p3 = new myPoint (2,1);
+		myPoint p4 = new myPoint (2,1);
+		Vector<myPoint> v1 = new Vector<myPoint>();
 		v1.add(p1);
 		v1.add(p3);
-		Vector<Point> v2 = new Vector<Point>();
+		Vector<myPoint> v2 = new Vector<myPoint>();
 		v2.add(p2);
 		v2.add(p4);
 		State s1 = new State(v1);

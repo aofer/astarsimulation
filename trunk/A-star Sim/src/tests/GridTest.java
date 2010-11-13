@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 import GUI.Cell;
-import GUI.Grid;
 import GUI.Cell.Status;
 import Simulation.mainFrame;
 
@@ -17,7 +16,9 @@ public class GridTest {
 		Cell[][] grid = main.get_grid().get_grid();
 		grid[1][2].set_status(Status.Blocked);
 		grid[2][2].set_status(Status.Blocked);
-		grid[0][0].set_status(Status.Start);
+		grid[3][7].set_status(Status.Start);
+		grid[3][8].set_status(Status.inOpenList);
+		grid[0][8].set_status(Status.inClosedList);
 		grid[10][10].set_status(Status.Finish);
 		
 		

@@ -6,7 +6,7 @@ package algorithms;
  *
  */
 
-public class Point {
+public class myPoint {
 	/** The x coordinate at the given step */
 	private int x;
 	/** The y coordinate at the given step */
@@ -18,7 +18,7 @@ public class Point {
 	 * @param x The x coordinate of the new step
 	 * @param y The y coordinate of the new step
 	 */
-	public Point(int x, int y) {
+	public myPoint(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -44,7 +44,7 @@ public class Point {
 	/**
 	 * @see Object#equals(Object)
 	 */
-	public boolean equals(Point other) {
+	public boolean equals(myPoint other) {
 			return (other.x == x) && (other.y == y);
 	}
 	public String toString(){

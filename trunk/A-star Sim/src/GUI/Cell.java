@@ -14,8 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+
+import algorithms.myPoint;
+
 
 /**
  *
@@ -33,20 +34,20 @@ public class Cell extends Component implements ActionListener {
 
 	
     //fields
-    private Point _position;
+    private myPoint _position;
     private Status _status ;
     private double _distFromStart;
     private double _distFromFinish ;
     private Agents _Agent_num ;
 
     //Constructor
-    public Cell(Point p) {
-    	this._position = p;
+    public Cell(myPoint point) {
+    	this._position = point;
         init();
     }
 
     //Constructor
-    public Cell(Point p, boolean block) {
+    public Cell(myPoint p, boolean block) {
     	this._position = p;       
         init();
         this.set_status(Status.Blocked);
@@ -69,14 +70,14 @@ public class Cell extends Component implements ActionListener {
     /**
      * @return the _position
      */
-    public Point getPosition() {
+    public myPoint getPosition() {
         return _position;
     }
 
     /**
      * @param position the _position to set
      */
-    public void setPosition(Point position) {
+    public void setPosition(myPoint position) {
         this._position = position;
     }
 
@@ -136,7 +137,9 @@ public class Cell extends Component implements ActionListener {
     @Override
     public void paint(Graphics g) {
         Dimension size = getSize();
-        g.setColor(Color.white);
+        if (this._status == Status.Empty) {
+            g.setColor(Color.white);
+        }
         if (this._status == Status.Start) {
             g.setColor(Color.green);
         }
@@ -145,6 +148,12 @@ public class Cell extends Component implements ActionListener {
         }
         if (this._status == Status.Blocked) {
             g.setColor(Color.black);
+        }
+        if (this._status == Status.inOpenList) {
+            g.setColor(Color.gray);
+        }
+        if (this._status == Status.inClosedList) {
+            g.setColor(Color.darkGray);
         }
         g.fillRect(0, 0, size.width, size.height);
         g.setColor(Color.black);

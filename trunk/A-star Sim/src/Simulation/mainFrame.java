@@ -6,11 +6,6 @@ package Simulation;
 
 import GUI.Grid;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -62,11 +57,6 @@ public class mainFrame extends JFrame {
 		_selectionGroup.add(_start);
 		_selectionGroup.add(_end);
 				
-		//_selectionPanel.add(_AgentBox);
-		
-	//	_selectionPanel.add(_start);
-		//_selectionPanel.add(_end);
-		//_selectionPanel.add(_block);
 		
 		GroupLayout layout = new GroupLayout(_selectionPanel);
 		_selectionPanel.setLayout(layout);
@@ -90,10 +80,6 @@ public class mainFrame extends JFrame {
 				           .addGap(350)
 				);
 
-
-		//_selectionPanel.setLayout(new GridLayout(5,2));
-		//_selectionPanel.setLayout(new BoxLayout(_selectionPanel, BoxLayout.Y_AXIS));
-		
 		
 		_contorlPanel.add(_bStart);
 		_contorlPanel.add(_bStop);

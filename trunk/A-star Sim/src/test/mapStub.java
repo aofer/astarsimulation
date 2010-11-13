@@ -5,7 +5,7 @@ import java.util.Vector;
 import maps.Mover;
 import maps.TileBasedMap;
 
-import algorithms.Point;
+import algorithms.myPoint;
 
 public class mapStub implements TileBasedMap {
 
@@ -40,10 +40,10 @@ public class mapStub implements TileBasedMap {
 	}
 
 	@Override
-	public Vector<Point> getAllMoves(Mover mover, Point p) {
-		Point p1 = new Point(p.getX() - 1,p.getY());
-		Point p2 = new Point(p.getX() + 1,p.getY());
-		Vector<Point> res = new Vector<Point>();
+	public Vector<myPoint> getAllMoves(Mover mover, myPoint p) {
+		myPoint p1 = new myPoint(p.getX() - 1,p.getY());
+		myPoint p2 = new myPoint(p.getX() + 1,p.getY());
+		Vector<myPoint> res = new Vector<myPoint>();
 		res.add(p1);
 		res.add(p2);
 		

@@ -10,12 +10,12 @@ import java.util.Vector;
  */
 public class State implements Comparable<State> {
 
-	private Vector<Point> _Coordinates;
+	private Vector<myPoint> _Coordinates;
 	private State _parent;
 	private float _cost;
 	private float _heuristic;
 
-	public State(Vector<Point> coordinates) {
+	public State(Vector<myPoint> coordinates) {
 		this._Coordinates = coordinates;
 		this._cost = 0;
 		this._heuristic = 0;
@@ -23,17 +23,17 @@ public class State implements Comparable<State> {
 	}
 
 	public State(State state) {
-		this._Coordinates = (Vector<Point>) state.get_Coordinates().clone();
+		this._Coordinates = (Vector<myPoint>) state.get_Coordinates().clone();
 		this._cost = state.get_cost();
 		this._heuristic = state.get_heuristic();
 		this._parent = state.get_parent();
 	}
 
-	public void set_state(Vector<Point> _state) {
+	public void set_state(Vector<myPoint> _state) {
 		this._Coordinates = _state;
 	}
 
-	public Vector<Point> get_Coordinates() {
+	public Vector<myPoint> get_Coordinates() {
 		return _Coordinates;
 	}
 
@@ -111,7 +111,7 @@ public class State implements Comparable<State> {
 	public String toString() {
 		String ans = "";
 		ans += "Current position: <";
-		for (Point p : this._Coordinates) {
+		for (myPoint p : this._Coordinates) {
 			ans += p.toString();
 		}
 		ans += ">\nParent: ";

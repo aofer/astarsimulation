@@ -6,7 +6,7 @@ import java.util.Vector;
 
 import algorithms.AStarPathFinder;
 import algorithms.PathFinderInterface;
-import algorithms.Point;
+import algorithms.myPoint;
 import algorithms.State;
 import maps.Mover;
 import maps.TileBasedMap;
@@ -31,15 +31,15 @@ public class test {
 		Mover mover2 = new moverStub();
 	//	Mover mover3 = new moverStub();
 		AStarPathFinder pathfinder = new AStarPathFinder(map, new ManhattanHeuristic());
-		Point p = new Point(0,4);
-		Point p2 = new Point(4,4);
+		myPoint p = new myPoint(0,4);
+		myPoint p2 = new myPoint(4,4);
 	//	System.out.println("Start point is: " + p.toString());
 	//	Vector<Point> moves = map.getAllMoves(mover, p);
 	//	System.out.println("All possible moves are:");
 	//	for (Point tPoint : moves){
 	//		System.out.println(tPoint.toString());
 	//	}
-		Vector<Point> coordinates = new Vector<Point>();
+		Vector<myPoint> coordinates = new Vector<myPoint>();
 		coordinates.add(p);
 		coordinates.add(p2);
 		//coordinates.add(p3);
@@ -53,9 +53,9 @@ public class test {
 		//for (State st : res){
 	//		System.out.println(st.toString());
 	//	}
-		Point p4 = new Point(4,4);
-		Point p5 = new Point(3,1);
-		Vector<Point> ends = new Vector<Point>();
+		myPoint p4 = new myPoint(4,4);
+		myPoint p5 = new myPoint(3,1);
+		Vector<myPoint> ends = new Vector<myPoint>();
 		ends.add(p4);
 		ends.add(p5);
 		Vector<State> path = pathfinder.findPath(movers, coordinates, ends);

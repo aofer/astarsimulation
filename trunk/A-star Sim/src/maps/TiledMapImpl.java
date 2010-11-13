@@ -2,7 +2,7 @@ package maps;
 
 import java.util.Vector;
 
-import algorithms.Point;
+import algorithms.myPoint;
 
 /**
  * an implementation of the tiled based map interface
@@ -54,13 +54,13 @@ public class TiledMapImpl implements TileBasedMap {
 	}
 
 	@Override
-	public Vector<Point> getAllMoves(Mover mover, Point p) {
-		Vector<Point> res = new Vector<Point>();
+	public Vector<myPoint> getAllMoves(Mover mover, myPoint p) {
+		Vector<myPoint> res = new Vector<myPoint>();
 		for (int i = p.getX() - 1; i <= p.getX() + 1;i++){
 			for (int j = p.getY()- 1; j <= p.getY() + 1;j++){
 				if (i == p.getX() || j == p.getY() || this._diagonal == true){
 					if (inMap(i,j) && !blocked(mover,i,j)){
-						Point tPoint = new Point(i,j);
+						myPoint tPoint = new myPoint(i,j);
 						//for debugging canceled the stay in one place
 				//		if (!(i == p.getX() && j == p.getY()))
 							res.add(tPoint);
