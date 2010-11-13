@@ -35,7 +35,6 @@ public class Grid extends Panel implements Serializable {
 	private Vector<myPoint> _openList;
 	transient Image buffer;
 	private mainFrame _mFrame;
-	
 
 	// constructor
 	public Grid(mainFrame main) {
@@ -44,7 +43,7 @@ public class Grid extends Panel implements Serializable {
 		setLayout(new GridLayout(get_width(), get_height()));
 		for (int i = 0; i < get_height(); i++) {
 			for (int j = 0; j < get_width(); j++) {
-				this._grid[i][j] = new Cell(new myPoint(i, j),_mFrame);
+				this._grid[i][j] = new Cell(new myPoint(i, j), _mFrame);
 				add(this._grid[i][j]);
 			}
 		}
@@ -53,7 +52,6 @@ public class Grid extends Panel implements Serializable {
 		this.set_openList(new Vector<myPoint>());
 	}
 
-	
 	public void set_starts(myPoint[] _starts) {
 		this._starts = _starts;
 	}
@@ -93,7 +91,7 @@ public class Grid extends Panel implements Serializable {
 	public Vector<myPoint> get_openList() {
 		return _openList;
 	}
-	
+
 	/**
 	 * set the cell in x,y to be empty
 	 * 
@@ -159,7 +157,7 @@ public class Grid extends Panel implements Serializable {
 		this._grid[x][y].set_status(Status.inClosedList);
 		repaint();
 	}
-	
+
 	/**
 	 * set the cell in x,y to be part of the final path
 	 * 
@@ -234,13 +232,13 @@ public class Grid extends Panel implements Serializable {
 	 * @param AgentNum
 	 */
 	public void addToStarts(myPoint p, int AgentNum) {
-		int agent = AgentNum-1;
-		if(this.get_starts()[agent]==null){
+		int agent = AgentNum - 1;
+		if (this.get_starts()[agent] == null) {
 			this.get_starts()[agent] = p;
 			setStartCell(p.getX(), p.getY());
-		}
-		else{			
-			setEmptyCell(this.get_starts()[agent].getX(),this.get_starts()[agent].getY());
+		} else {
+			setEmptyCell(this.get_starts()[agent].getX(),
+					this.get_starts()[agent].getY());
 			this.get_starts()[agent] = p;
 			setStartCell(p.getX(), p.getY());
 		}
@@ -253,33 +251,33 @@ public class Grid extends Panel implements Serializable {
 	 * @param AgentNum
 	 */
 	public void addToEnds(myPoint p, int AgentNum) {
-		int agent = AgentNum-1;
-		if(this.get_ends()[agent]==null){
+		int agent = AgentNum - 1;
+		if (this.get_ends()[agent] == null) {
 			this.get_ends()[agent] = p;
 			setEndCell(p.getX(), p.getY());
-		}
-		else{			
-			setEmptyCell(this.get_ends()[agent].getX(),this.get_ends()[agent].getY());
+		} else {
+			setEmptyCell(this.get_ends()[agent].getX(), this.get_ends()[agent]
+					.getY());
 			this.get_ends()[agent] = p;
 			setEndCell(p.getX(), p.getY());
 		}
 	}
 
 	public void addToBlock(myPoint p) {
-		if (this.get_blockList().contains(p)){
+		if (this.get_blockList().contains(p)) {
 			setEmptyCell(p.getX(), p.getY());
-			this.get_blockList().remove(p);		
-		}
-		else{
+			this.get_blockList().remove(p);
+		} else {
 			this.get_blockList().add(p);
 			setBlockedCell(p.getX(), p.getY());
 		}
 	}
-	
+
 	/**
 	 * add point p to the open list
 	 * 
-	 * @param p point    
+	 * @param p
+	 *            point
 	 */
 	public void addToOpenList(myPoint p) {
 		this.get_openList().add(p);
@@ -297,8 +295,6 @@ public class Grid extends Panel implements Serializable {
 
 	}
 
-	
-	
 	/**
 	 * remove point from the open list
 	 * 
@@ -345,41 +341,53 @@ public class Grid extends Panel implements Serializable {
 			}
 		}
 	}
+
 	/**
 	 * checks if all the parameters entered correctly
+	 * 
 	 * @return
 	 */
 	public boolean checkArguments() {
 		boolean ans = true;
-		for(int i = 0; i < NUM_OF_AGENT ; i++){
+		for (int i = 0; i < NUM_OF_AGENT; i++) {
 			if (this.get_starts()[i] == null | this.get_ends()[i] == null) {
-				ans=false;
+				ans = false;
 				break;
 			}
 		}
 		return ans;
 	}
 
-	//debug
+	// debug
 	public void printStartPoints() {
-		for (int i = 0; i < NUM_OF_AGENT ; i++) {
+		for (int i = 0; i < NUM_OF_AGENT; i++) {
 			if (this.get_starts()[i] != null) {
 				System.out.println(this.get_starts()[i].toString());
 			}
 		}
 	}
 
-
-	public void drawFinalPath(Vector<myPoint> finalPath) {		
+	public void drawFinalPath(Vector<myPoint> finalPath) {
 		for (int i = 0; i < finalPath.size(); i++) {
 			myPoint p = finalPath.elementAt(i);
-			setFinalPathCell(p.getX(),p.getY());
+			setFinalPathCell(p.getX(), p.getY());
 		}
-				
+
 	}
 
-	
-
-	
+	public void clear() {
+		for (int i = 0; i < get_height(); i++) {
+			for (int j = 0; j < get_width(); j++) {
+				setEmptyCell(i,j);	
+			}
+		}
+		for (int i = 0; i < NUM_OF_AGENT; i++) {
+			this._starts[i]=null;
+			this._ends[i]=null;
+		}
+		this._blockList.removeAllElements();
+		this._openList.removeAllElements();
+		this._closedList.removeAllElements();
+	}
 
 }// end of class
