@@ -3,16 +3,24 @@
  * and open the template in the editor.
  */
 package Simulation;
-
+import Controller.Controller;
 import GUI.Grid;
+
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
+import algorithms.myPoint;
 
 /**
  * 
@@ -24,10 +32,13 @@ public class mainFrame extends JFrame {
 	private JPanel _selectionPanel;
 	public JPanel __mainPanel;
 	private JPanel _contorlPanel;
-	private JRadioButton _block,_start,_end;
+	private JRadioButton _rBlock,_rStart,_rEnd;
 	private ButtonGroup _selectionGroup;
 	private JComboBox _AgentBox;
 	private JButton _bStart, _bStop, _bStep, _bClear;
+	private Controller _controller;
+	private String _command;
+	private int _agentNum;
 
 	// Constructor
 	public mainFrame(String title) {
@@ -36,15 +47,19 @@ public class mainFrame extends JFrame {
 	}
 
 	private void initComponenets() {
-		set_grid(new Grid());
+		set_grid(new Grid(this));
+		_controller = new Controller();
 		_selectionPanel = new JPanel();
 		__mainPanel = new JPanel();
 		_contorlPanel = new JPanel();
+		this._command = "start";
+		this._agentNum = 1;
 
 		_selectionGroup = new ButtonGroup();
-		_block = new JRadioButton("Block");
-		_start = new JRadioButton("Start Point");
-		_end = new JRadioButton("End Point");		
+		_rBlock = new JRadioButton("Block");
+		_rStart = new JRadioButton("Start Point");
+		_rStart.setSelected(true);
+		_rEnd = new JRadioButton("End Point");		
 
 		_AgentBox = new JComboBox (agentsStrings);	
 		
@@ -53,9 +68,9 @@ public class mainFrame extends JFrame {
 		_bStep = new JButton ("step");
 		_bClear = new JButton ("Clear Path");
 		
-		_selectionGroup.add(_block);
-		_selectionGroup.add(_start);
-		_selectionGroup.add(_end);
+		_selectionGroup.add(_rBlock);
+		_selectionGroup.add(_rStart);
+		_selectionGroup.add(_rEnd);
 				
 		
 		GroupLayout layout = new GroupLayout(_selectionPanel);
@@ -65,18 +80,18 @@ public class mainFrame extends JFrame {
 				   layout.createSequentialGroup()
 				   .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				           .addComponent(_AgentBox)
-				           .addComponent(_start)
-				           .addComponent(_end)
-				           .addComponent(_block))
+				           .addComponent(_rStart)
+				           .addComponent(_rEnd)
+				           .addComponent(_rBlock))
 				);
 
 		layout.setVerticalGroup(
 				   layout.createSequentialGroup()
 				   			.addGap(50)
 				           .addComponent(_AgentBox)
-				           .addComponent(_start)
-				           .addComponent(_end)
-				           .addComponent(_block)
+				           .addComponent(_rStart)
+				           .addComponent(_rEnd)
+				           .addComponent(_rBlock)
 				           .addGap(350)
 				);
 
@@ -93,6 +108,55 @@ public class mainFrame extends JFrame {
 		__mainPanel.add(get_grid(), BorderLayout.CENTER);
 		__mainPanel.add(_contorlPanel, BorderLayout.SOUTH);
 		
+				
+		this._rStart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                startPointActionPerformed(evt);
+            }
+        });
+		
+		this._rEnd.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                endPointActionPerformed(evt);
+            }		
+        });
+		
+		this._rBlock.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                blockedActionPerformed(evt);
+            }				
+        });
+		
+		this._AgentBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                agentBoxActionPerformed(evt);
+            }				
+        });
+		
+		this._bStart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                bStartActionPerformed(evt);
+            }					
+        });
+		
+		this._bStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                bStopActionPerformed(evt);
+            }				
+        });
+		
+		this._bStep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                bStepActionPerformed(evt);
+            }				
+        });
+		
+		this._bClear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                bClearActionPerformed(evt);
+            }				
+        });
+		
 		
 	}
 
@@ -103,6 +167,61 @@ public class mainFrame extends JFrame {
 	public Grid get_grid() {
 		return _grid;
 	}
+	
+	private void startPointActionPerformed(ActionEvent evt) {	
+		this._command = "start";	
+	}
+	
+	private void endPointActionPerformed(ActionEvent evt) {
+		this._command = "end";
+		
+	}
+	
+	private void blockedActionPerformed(ActionEvent evt) {
+		this._command = "block";	
+	}	
+	
+	private void agentBoxActionPerformed(ActionEvent evt) {
+		this._agentNum = this._AgentBox.getSelectedIndex() + 1 ;	
+	}
+	
+	private void bStartActionPerformed(ActionEvent evt) {
+		if(this._grid.checkArguments()){
+			Vector<myPoint> finalPath = this._controller.findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
+			System.out.println("correct");
+			this.get_grid().drawFinalPath(finalPath);
+		}
+		else{
+			JOptionPane.showMessageDialog(this,
+				    "You havn't entered all the parameters, please try again", 
+				    "Missing Argumets", JOptionPane.ERROR_MESSAGE);
+		}		
+	}	
+	
+	private void bStopActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub		
+	}	
+	
+	private void bStepActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}	
+	private void bClearActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getCommand() {
+		return this._command;
+		
+	}
+
+	public int getAgentNumber() {
+		return this._agentNum;
+		
+	}	
+	
+	
 	
 }// end of class
 

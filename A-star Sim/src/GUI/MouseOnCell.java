@@ -8,47 +8,39 @@ package GUI;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JPopupMenu;
 
 /**
  * 
  * @author Owner
  */
-class MouseOnCell implements MouseListener {
-
-	MouseOnCell () {
+public class MouseOnCell implements MouseListener {
+	
+	public MouseOnCell () {
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		handleMouseEvent(e);
+		//To-Do
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		handleMouseEvent(e);
+		//To-Do
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		handleMouseEvent(e);
+		//To-Do
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		handleMouseEvent(e);
+		//To-Do
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		handleMouseEvent(e);
-	}
-	
-	private void handleMouseEvent(MouseEvent e) {
-		if (e.isPopupTrigger()) {
-			System.out.println("action is: "  + e.toString());
-		}
-		
+		//To-Do
 	}
 
 }
