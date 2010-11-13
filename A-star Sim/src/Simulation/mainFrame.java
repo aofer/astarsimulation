@@ -66,7 +66,7 @@ public class mainFrame extends JFrame {
 		_bStart = new JButton ("Start");
 		_bStop = new JButton ("stop");
 		_bStep = new JButton ("step");
-		_bClear = new JButton ("Clear Path");
+		_bClear = new JButton ("Clear");
 		
 		_selectionGroup.add(_rBlock);
 		_selectionGroup.add(_rStart);
@@ -207,8 +207,7 @@ public class mainFrame extends JFrame {
 		
 	}	
 	private void bClearActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
-		
+		this.get_grid().clear();		
 	}
 
 	public String getCommand() {
