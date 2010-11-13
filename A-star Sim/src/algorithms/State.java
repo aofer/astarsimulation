@@ -4,25 +4,26 @@ import java.util.Vector;
 
 /**
  * a state in the search tree
+ * 
  * @author amit ofer & liron katav
- *
+ * 
  */
-public class State implements Comparable<State>{
-	
+public class State implements Comparable<State> {
+
 	private Vector<Point> _Coordinates;
 	private State _parent;
 	private float _cost;
 	private float _heuristic;
-	
-	public State(Vector<Point> coordinates){
+
+	public State(Vector<Point> coordinates) {
 		this._Coordinates = coordinates;
 		this._cost = 0;
 		this._heuristic = 0;
 		this._parent = null;
 	}
-	
+
 	public State(State state) {
-		this._Coordinates = (Vector<Point>)state.get_Coordinates().clone();
+		this._Coordinates = (Vector<Point>) state.get_Coordinates().clone();
 		this._cost = state.get_cost();
 		this._heuristic = state.get_heuristic();
 		this._parent = state.get_parent();
@@ -31,30 +32,39 @@ public class State implements Comparable<State>{
 	public void set_state(Vector<Point> _state) {
 		this._Coordinates = _state;
 	}
+
 	public Vector<Point> get_Coordinates() {
 		return _Coordinates;
 	}
+
 	public void set_parent(State _parent) {
 		this._parent = _parent;
 	}
+
 	public State get_parent() {
 		return _parent;
 	}
+
 	public void set_cost(float _cost) {
 		this._cost = _cost;
 	}
+
 	public float get_cost() {
 		return _cost;
 	}
+
 	public void set_heuristic(float _heuristic) {
 		this._heuristic = _heuristic;
 	}
+
 	public float get_heuristic() {
 		return _heuristic;
 	}
-	public float get_f(){
+
+	public float get_f() {
 		return this._heuristic + this._cost;
 	}
+
 	@Override
 	public int compareTo(State other) {
 		float f = this.get_f();
@@ -67,27 +77,47 @@ public class State implements Comparable<State>{
 			return 0;
 		}
 	}
-	public boolean equals(State other){
+
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof State)) {
+			return false;
+		} else {
+			boolean ans = true;
+			State s = (State)other;
+			for (int i = 0; i < this._Coordinates.size(); i++) {
+				if (!this._Coordinates.elementAt(i).equals(
+						s.get_Coordinates().elementAt(i))) {
+					ans = false;
+					break;
+				}
+			}
+			return ans;
+		}
+	}
+
+	public boolean equals(State other) {
 		boolean ans = true;
-		for (int i = 0;i < this._Coordinates.size();i++){
-			if (!this._Coordinates.elementAt(i).equals(other.get_Coordinates().elementAt(i))){
+		for (int i = 0; i < this._Coordinates.size(); i++) {
+			if (!this._Coordinates.elementAt(i).equals(
+					other.get_Coordinates().elementAt(i))) {
 				ans = false;
 				break;
 			}
 		}
 		return ans;
 	}
-	public String toString(){
+
+	public String toString() {
 		String ans = "";
-		ans +=  "Current position: <";
-		for ( Point p : this._Coordinates){
+		ans += "Current position: <";
+		for (Point p : this._Coordinates) {
 			ans += p.toString();
 		}
 		ans += ">\nParent: ";
-		if (this._parent == null){
+		if (this._parent == null) {
 			ans += "null";
-		}
-		else{
+		} else {
 			ans += this._parent.toString();
 		}
 		ans += "\nCost: " + this._cost;
