@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import maps.Mover;
 import maps.TileBasedMap;
+import maps.TileStatus;
 
 import algorithms.myPoint;
 
@@ -48,6 +49,18 @@ public class mapStub implements TileBasedMap {
 		res.add(p2);
 		
 		return res;
+	}
+
+	@Override
+	public void setTile(int x, int y, TileStatus status) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setTile(int x, int y, TileStatus status, float cost) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -41,8 +41,8 @@ public class AStarPathFinder implements PathFinderInterface {
 	 * calculates the paths for all moving objects in the search according
 	 * to the A* algorithm
 	 */
-	public Vector<State> findPath(Vector<Mover> movers, Vector<myPoint> starts,
-			Vector<myPoint> ends) {
+	public Vector<Vector<myPoint>> findPath(Vector<Mover> movers,
+			Vector<myPoint> starts, Vector<myPoint> ends) {
 		State initialState = new State(starts);
 		initialState.set_heuristic(this._heuristic.getCost(_map, movers,
 				starts, ends));
@@ -81,10 +81,10 @@ public class AStarPathFinder implements PathFinderInterface {
 			}
 		}
 		// TODO pathfinding and reconsturcting after the algorithm finished
-		Vector<State> path = new Vector<State>();
+		Vector<Vector<myPoint>> path = new Vector<Vector<myPoint>>();
 		if (current != null && current.equals(finalState)) {
 			while (!current.equals(initialState)) {
-				path.add(current);
+				path.add(current.get_Coordinates());
 				current = current.get_parent();
 			}
 
@@ -104,8 +104,8 @@ public class AStarPathFinder implements PathFinderInterface {
 	 *            - the vector containing the goal positions of all agents
 	 * @return
 	 */
-	private float getHeuristicCost(Vector<Mover> movers, Vector<myPoint> starts,
-			Vector<myPoint> ends) {
+	private float getHeuristicCost(Vector<Mover> movers,
+			Vector<myPoint> starts, Vector<myPoint> ends) {
 		return this._heuristic.getCost(this._map, movers, starts, ends);
 	}
 
@@ -162,15 +162,12 @@ public class AStarPathFinder implements PathFinderInterface {
 					tState.get_Coordinates().size() - 1);
 			// Mover mover = movers.remove(movers.size() - 1);
 			Mover mover = movers.get(movers.size() - 1);
-			Vector<Mover> tMovers = (Vector<Mover>) movers.clone(); // clone
-																	// method is
-																	// not type
-																	// safe
+			Vector<Mover> tMovers = (Vector<Mover>) movers.clone(); // clone method is not type safe
 			Vector<myPoint> moves = this._map.getAllMoves(mover, tPoint);
 			Vector<State> tStates = getNeighbours(tState, tMovers);
 			for (myPoint p : moves) {
 				for (State s : tStates) {
-					if (checkIfLegal(state,p, s)) {
+					if (checkIfLegal(state, p, s)) {
 						Vector<myPoint> tCoordinates = new Vector<myPoint>(
 								s.get_Coordinates());
 						tCoordinates.add(p);
@@ -183,11 +180,11 @@ public class AStarPathFinder implements PathFinderInterface {
 		}
 	}
 
-	private boolean checkIfLegal(State current,myPoint p, State s) {
+	private boolean checkIfLegal(State current, myPoint p, State s) {
 		boolean ans = true;
 		Vector<myPoint> tCoordinates = s.get_Coordinates();
-		for (myPoint tPoint : tCoordinates){
-			if (!checkIfLegal(p,tPoint)){
+		for (myPoint tPoint : tCoordinates) {
+			if (!checkIfLegal(p, tPoint)) {
 				ans = false;
 				break;
 			}
@@ -197,10 +194,26 @@ public class AStarPathFinder implements PathFinderInterface {
 
 	private boolean checkIfLegal(myPoint p1, myPoint p2) {
 		boolean ans = true;
-		//check if the points are equal - meaning the two agents are on the same tile
+		// check if the points are equal - meaning the two agents are on the
+		// same tile
 		if (p1.equals(p2))
 			ans = false;
-		//else if ()
+		// else if ()
 		return ans;
+	}
+
+	/**
+	 * returns the path for a specific agent
+	 */
+	@Override
+	public Vector<myPoint> getPathForAgent(
+			Vector<Vector<myPoint>> allAgentsPath, int index) {
+		Vector<myPoint> path = new Vector<myPoint>();
+		for (int i = 0; i < allAgentsPath.size(); i++) {
+			Vector<myPoint> tVector = allAgentsPath.elementAt(i);
+			myPoint tPoint = tVector.elementAt(index);
+			path.add(tPoint);
+		}
+		return path;
 	}
 }

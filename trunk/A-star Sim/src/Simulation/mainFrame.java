@@ -48,7 +48,7 @@ public class mainFrame extends JFrame {
 
 	private void initComponenets() {
 		set_grid(new Grid(this));
-		_controller = new Controller();
+		set_controller(new Controller());
 		_selectionPanel = new JPanel();
 		__mainPanel = new JPanel();
 		_contorlPanel = new JPanel();
@@ -187,7 +187,8 @@ public class mainFrame extends JFrame {
 	
 	private void bStartActionPerformed(ActionEvent evt) {
 		if(this._grid.checkArguments()){
-			Vector<myPoint> finalPath = this._controller.findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
+			this._controller.setTile(this._grid.get_blockList());
+			Vector<Vector<myPoint>> finalPath = this.get_controller().findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
 			System.out.println("correct");
 			this.get_grid().drawFinalPath(finalPath);
 		}
@@ -218,6 +219,14 @@ public class mainFrame extends JFrame {
 	public int getAgentNumber() {
 		return this._agentNum;
 		
+	}
+
+	public void set_controller(Controller _controller) {
+		this._controller = _controller;
+	}
+
+	public Controller get_controller() {
+		return _controller;
 	}	
 	
 	
