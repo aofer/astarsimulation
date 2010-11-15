@@ -58,11 +58,13 @@ public class test {
 		Vector<myPoint> ends = new Vector<myPoint>();
 		ends.add(p4);
 		ends.add(p5);
-		Vector<State> path = pathfinder.findPath(movers, coordinates, ends);
+		Vector<Vector<myPoint>> path = pathfinder.findPath(movers, coordinates, ends);
 		
 		System.out.println("Path size is: " + path.size() +"\n");
-		for (State state : path){
-			System.out.println(state.get_Coordinates().toString());
+		for (Vector<myPoint> tVector : path){
+			for (myPoint tPoint : tVector)
+			System.out.print(tPoint);
+			System.out.println();
 		}
 
 	}

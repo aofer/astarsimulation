@@ -367,10 +367,12 @@ public class Grid extends Panel implements Serializable {
 		}
 	}
 
-	public void drawFinalPath(Vector<myPoint> finalPath) {
+	public void drawFinalPath(Vector<Vector<myPoint>> finalPath) {
 		for (int i = 0; i < finalPath.size(); i++) {
-			myPoint p = finalPath.elementAt(i);
-			setFinalPathCell(p.getX(), p.getY());
+			Vector<myPoint> tStep = finalPath.elementAt(i);
+			for (myPoint p : tStep){
+				setFinalPathCell(p.getX(), p.getY());
+			}
 		}
 
 	}

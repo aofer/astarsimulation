@@ -65,4 +65,8 @@ public interface TileBasedMap {
 	public float getCost(Mover mover, int sx, int sy, int tx, int ty);
 
 	public Vector<myPoint> getAllMoves(Mover mover, myPoint p);
+	
+	public void setTile(int x, int y,TileStatus status);
+	
+	public void setTile(int x,int y,TileStatus status,float cost);
 }
