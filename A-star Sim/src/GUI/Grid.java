@@ -22,7 +22,7 @@ import algorithms.myPoint;
  */
 public class Grid extends Panel implements Serializable {
 
-	public final static int LENGHT = 20;
+	public final static int LENGHT = 10;
 	public final static int NUM_OF_AGENT = 2;
 	// fields
 	private int _width = LENGHT;
@@ -146,6 +146,12 @@ public class Grid extends Panel implements Serializable {
 		this._grid[x][y].set_status(Status.inOpenList);
 		repaint();
 	}
+	
+	public void setOpenListCell(Vector<myPoint> points ){
+		for (myPoint p : points){
+			this.setOpenListCell(p.getX(),p.getY());
+		}
+	}
 
 	/**
 	 * set the cell in x,y to be blocked
@@ -158,6 +164,11 @@ public class Grid extends Panel implements Serializable {
 		repaint();
 	}
 
+	public void setClosedListCell(Vector<myPoint> points ){
+		for (myPoint p : points){
+			this.setClosedListCell(p.getX(),p.getY());
+		}
+	}
 	/**
 	 * set the cell in x,y to be part of the final path
 	 * 

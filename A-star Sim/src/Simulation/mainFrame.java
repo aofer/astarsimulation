@@ -4,11 +4,15 @@
  */
 package Simulation;
 import Controller.Controller;
+import Events.ClosedListChangeEvent;
+import Events.OpenListChangeEvent;
 import GUI.Grid;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -26,7 +30,7 @@ import algorithms.myPoint;
  * 
  * @author Liron Katav
  */
-public class mainFrame extends JFrame {
+public class mainFrame extends JFrame implements Observer {
 	String[] agentsStrings = { "Agent1", "Agent2"};
 	private Grid _grid;
 	private JPanel _selectionPanel;
@@ -188,9 +192,10 @@ public class mainFrame extends JFrame {
 	private void bStartActionPerformed(ActionEvent evt) {
 		if(this._grid.checkArguments()){
 			this._controller.setTile(this._grid.get_blockList());
+			this._controller.setObserver(this);
 			Vector<Vector<myPoint>> finalPath = this.get_controller().findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
-			System.out.println("correct");
 			this.get_grid().drawFinalPath(finalPath);
+
 		}
 		else{
 			JOptionPane.showMessageDialog(this,
@@ -227,6 +232,19 @@ public class mainFrame extends JFrame {
 
 	public Controller get_controller() {
 		return _controller;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if ( arg1 instanceof OpenListChangeEvent){
+			OpenListChangeEvent event = (OpenListChangeEvent)arg1;
+			this._grid.setOpenListCell(event.get_Points());
+		}
+		else if (arg1 instanceof ClosedListChangeEvent){
+			ClosedListChangeEvent event = (ClosedListChangeEvent)arg1;
+			this._grid.setClosedListCell(event.get_Points());
+		}
+		
 	}	
 	
 	
