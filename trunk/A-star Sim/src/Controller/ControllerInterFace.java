@@ -16,14 +16,5 @@ public interface ControllerInterFace {
 	public Vector<Vector<myPoint>> findPath(myPoint[] startPoints,
 									myPoint[] endPoints, 
 									Vector<myPoint> _blocked);
-	/**
-	 * @return the openList
-	 */
-	public Vector<myPoint> getOpenList();
-	
-	/**
-	 * @return the closed list 
-	 */
-	public Vector<myPoint> getClosedList();
 
 }
