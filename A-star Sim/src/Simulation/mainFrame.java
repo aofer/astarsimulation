@@ -4,8 +4,6 @@
  */
 package Simulation;
 import Controller.Controller;
-import Events.ClosedListChangeEvent;
-import Events.OpenListChangeEvent;
 import GUI.Grid;
 
 import java.awt.BorderLayout;
@@ -30,7 +28,7 @@ import algorithms.myPoint;
  * 
  * @author Liron Katav
  */
-public class mainFrame extends JFrame implements Observer {
+public class mainFrame extends JFrame {
 	String[] agentsStrings = { "Agent1", "Agent2"};
 	private Grid _grid;
 	private JPanel _selectionPanel;
@@ -192,7 +190,6 @@ public class mainFrame extends JFrame implements Observer {
 	private void bStartActionPerformed(ActionEvent evt) {
 		if(this._grid.checkArguments()){
 			this._controller.setTile(this._grid.get_blockList());
-			this._controller.setObserver(this);
 			Vector<Vector<myPoint>> finalPath = this.get_controller().findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
 			this.get_grid().drawFinalPath(finalPath);
 
@@ -234,18 +231,7 @@ public class mainFrame extends JFrame implements Observer {
 		return _controller;
 	}
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		if ( arg1 instanceof OpenListChangeEvent){
-			OpenListChangeEvent event = (OpenListChangeEvent)arg1;
-			this._grid.setOpenListCell(event.get_Points());
-		}
-		else if (arg1 instanceof ClosedListChangeEvent){
-			ClosedListChangeEvent event = (ClosedListChangeEvent)arg1;
-			this._grid.setClosedListCell(event.get_Points());
-		}
-		
-	}	
+
 	
 	
 	

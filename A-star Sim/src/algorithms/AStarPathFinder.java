@@ -18,7 +18,7 @@ import maps.TileBasedMap;
  * @author amit
  * 
  */
-public class AStarPathFinder extends Observable implements PathFinderInterface{
+public class AStarPathFinder implements PathFinderInterface{
 
 	private TileBasedMap _map;
 	private Vector<State> _closedList;

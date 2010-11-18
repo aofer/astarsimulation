@@ -13,8 +13,6 @@ import maps.Mover;
 import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
-
-import Events.OpenListChangeEvent;
 import Simulation.Simulator;
 import Simulation.mainFrame;
 import algorithms.AStarPathFinder;
@@ -60,8 +58,5 @@ public class Controller implements ControllerInterFace {
 		return res;
 	}
 
-	public void setObserver(mainFrame frame){
-		this._pathFinder.addObserver(frame);
-	}
 	
 }
