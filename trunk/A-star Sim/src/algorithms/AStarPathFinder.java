@@ -157,14 +157,12 @@ public class AStarPathFinder implements PathFinderInterface{
 			return res;
 		} else {
 			Vector<State> res = new Vector<State>();
-			// Point tPoint =
-			// state.get_Coordinates().remove(state.get_Coordinates().size() -
-			// 1);
 			State tState = new State(state);
-			myPoint tPoint = tState.get_Coordinates().remove(
-					tState.get_Coordinates().size() - 1);
+		//	myPoint tPoint = tState.get_Coordinates().remove(tState.get_Coordinates().size() - 1);
+			myPoint tPoint = tState.get_Coordinates().remove(0);
 			// Mover mover = movers.remove(movers.size() - 1);
-			Mover mover = movers.get(movers.size() - 1);
+		//	Mover mover = movers.get(movers.size() - 1);
+			Mover mover = movers.get(0);
 			Vector<Mover> tMovers = (Vector<Mover>) movers.clone(); // clone method is not type safe
 			Vector<myPoint> moves = this._map.getAllMoves(mover, tPoint);
 			Vector<State> tStates = getNeighbours(tState, tMovers);
@@ -173,7 +171,7 @@ public class AStarPathFinder implements PathFinderInterface{
 					if (checkIfLegal(state, p, s)) {
 						Vector<myPoint> tCoordinates = new Vector<myPoint>(
 								s.get_Coordinates());
-						tCoordinates.add(p);
+						tCoordinates.add(0,p);
 						State resState = new State(tCoordinates);
 						res.add(resState);
 					}
