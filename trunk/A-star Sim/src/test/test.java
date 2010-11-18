@@ -20,6 +20,7 @@ public class test {
 	 */
 	public static void main(String[] args) {
 		TiledMapImpl map = new TiledMapImpl(5,5,false);
+		/*
 		map.setTile(2, 4, TileStatus.blocked);
 		map.setTile(2, 2, TileStatus.blocked);
 		map.setTile(2, 1, TileStatus.blocked);
@@ -27,12 +28,13 @@ public class test {
 		map.setTile(1, 2, TileStatus.blocked);
 		map.setTile(3, 2, TileStatus.blocked);
 		map.setTile(4, 0, TileStatus.blocked);
+		*/
 		Mover mover = new moverStub();
 		Mover mover2 = new moverStub();
 	//	Mover mover3 = new moverStub();
 		AStarPathFinder pathfinder = new AStarPathFinder(map, new ManhattanHeuristic());
-		myPoint p = new myPoint(0,4);
-		myPoint p2 = new myPoint(4,4);
+		myPoint p = new myPoint(1,2);
+		myPoint p2 = new myPoint(2,2);
 	//	System.out.println("Start point is: " + p.toString());
 	//	Vector<Point> moves = map.getAllMoves(mover, p);
 	//	System.out.println("All possible moves are:");
@@ -53,8 +55,8 @@ public class test {
 		//for (State st : res){
 	//		System.out.println(st.toString());
 	//	}
-		myPoint p4 = new myPoint(4,4);
-		myPoint p5 = new myPoint(3,1);
+		myPoint p4 = new myPoint(3,2);
+		myPoint p5 = new myPoint(0,2);
 		Vector<myPoint> ends = new Vector<myPoint>();
 		ends.add(p4);
 		ends.add(p5);

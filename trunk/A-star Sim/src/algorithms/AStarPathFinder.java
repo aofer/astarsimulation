@@ -190,6 +190,24 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 
 	private boolean checkIfLegal(State current, myPoint p, State s) {
 		boolean ans = true;
+		Vector<myPoint> tCurrentPoints = current.get_Coordinates();
+		Vector<myPoint> tCoordinates = s.get_Coordinates();
+		int seifaIndex = tCurrentPoints.size() - tCoordinates.size();
+		for (int i = 0; i < tCoordinates.size(); i++) {
+			if ( p.equals(tCoordinates.elementAt(i)) || 
+					(p.equals(tCurrentPoints.elementAt(seifaIndex + i))) &&
+					tCoordinates.elementAt(i).equals(tCurrentPoints.elementAt(seifaIndex - 1))) {
+				ans = false;
+				break;
+			}
+		}
+		return ans;
+	}
+
+	
+	/*
+	 * 	private boolean checkIfLegal(State current, myPoint p, State s) {
+		boolean ans = true;
 		Vector<myPoint> tCoordinates = s.get_Coordinates();
 		for (myPoint tPoint : tCoordinates) {
 			if (!checkIfLegal(p, tPoint)) {
@@ -199,7 +217,7 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 		}
 		return ans;
 	}
-
+	 *//*
 	private boolean checkIfLegal(myPoint p1, myPoint p2) {
 		boolean ans = true;
 		// check if the points are equal - meaning the two agents are on the
@@ -209,7 +227,7 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 		// else if ()
 		return ans;
 	}
-
+*/
 	/**
 	 * returns the path for a specific agent
 	 */
