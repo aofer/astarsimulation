@@ -7,8 +7,6 @@ import java.util.Observer;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-import Events.ClosedListChangeEvent;
-import Events.OpenListChangeEvent;
 
 import maps.Mover;
 import maps.TileBasedMap;
@@ -54,7 +52,6 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 		State finalState = new State(ends);
 		State current = null;
 		this._openList.add(initialState);
-		NotifyOpenListChange(initialState);
 		while (this._openList.size() != 0) {
 			current = this._openList.poll();
 			System.out.println(current.toString());
@@ -62,7 +59,6 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 				break;
 			}
 			this._closedList.add(current);
-			NotifyClosedListChange(current);
 			Vector<State> neighbours = getNeighbours(current, movers);
 			for (State neighbour : neighbours) {
 				float nextStepCost = current.get_cost()
@@ -82,8 +78,7 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 					neighbour.set_heuristic(getHeuristicCost(movers,
 							neighbour.get_Coordinates(), ends));
 					neighbour.set_parent(current);
-					this._openList.add(neighbour);
-					NotifyOpenListChange(neighbour);
+					this._openList.add(neighbour);	
 				}
 
 			}
@@ -243,12 +238,4 @@ public class AStarPathFinder extends Observable implements PathFinderInterface{
 		return path;
 	}
 	
-	private void NotifyOpenListChange(State s){
-		OpenListChangeEvent event = new OpenListChangeEvent(s.get_Coordinates());
-		notifyObservers(event);
-	}
-	private void NotifyClosedListChange(State s){
-		ClosedListChangeEvent event = new ClosedListChangeEvent(s.get_Coordinates());
-		notifyObservers(event);
-	}
 }
