@@ -44,6 +44,7 @@ public class test {
 		Vector<myPoint> coordinates = new Vector<myPoint>();
 		coordinates.add(p);
 		coordinates.add(p2);
+
 		//coordinates.add(p3);
 		State s = new State(coordinates);
 		Vector<Mover> movers = new Vector<Mover>();
@@ -60,6 +61,7 @@ public class test {
 		Vector<myPoint> ends = new Vector<myPoint>();
 		ends.add(p4);
 		ends.add(p5);
+
 		Vector<Vector<myPoint>> path = pathfinder.findPath(movers, coordinates, ends);
 		
 		System.out.println("Path size is: " + path.size() +"\n");
