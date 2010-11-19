@@ -9,9 +9,6 @@ import GUI.Grid;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -22,13 +19,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import algorithms.myPoint;
 
 /**
  * 
  * @author Liron Katav
  */
 public class mainFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String[] agentsStrings = { "Agent1", "Agent2"};
 	private Grid _grid;
 	private JPanel _selectionPanel;
@@ -50,7 +50,7 @@ public class mainFrame extends JFrame {
 
 	private void initComponenets() {
 		set_grid(new Grid(this));
-		set_controller(new Controller());
+		set_controller(new Controller(this));
 		_selectionPanel = new JPanel();
 		__mainPanel = new JPanel();
 		_contorlPanel = new JPanel();
@@ -184,15 +184,13 @@ public class mainFrame extends JFrame {
 	}	
 	
 	private void agentBoxActionPerformed(ActionEvent evt) {
-		this._agentNum = this._AgentBox.getSelectedIndex() + 1 ;	
+		this._agentNum = this._AgentBox.getSelectedIndex() + 1 ;
 	}
 	
 	private void bStartActionPerformed(ActionEvent evt) {
 		if(this._grid.checkArguments()){
 			this._controller.setTile(this._grid.get_blockList());
-			Vector<Vector<myPoint>> finalPath = this.get_controller().findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
-			this.get_grid().drawFinalPath(finalPath);
-
+			this.get_controller().findPath(this.get_grid().get_starts(),this.get_grid().get_ends(),this.get_grid().get_blockList());
 		}
 		else{
 			JOptionPane.showMessageDialog(this,
@@ -202,7 +200,8 @@ public class mainFrame extends JFrame {
 	}	
 	
 	private void bStopActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub		
+		this._controller.get_findPathWorker().cancel(true);
+		this._controller.set_findPathWorker(null);
 	}	
 	
 	private void bStepActionPerformed(ActionEvent evt) {

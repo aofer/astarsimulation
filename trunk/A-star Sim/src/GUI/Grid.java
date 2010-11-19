@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Panel;
-import java.io.Serializable;
 import java.util.Vector;
 
 import GUI.Cell.Status;
@@ -20,8 +19,12 @@ import algorithms.myPoint;
  * 
  * @author Liron Katav
  */
-public class Grid extends Panel implements Serializable {
+public class Grid extends Panel  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static int LENGHT = 10;
 	public final static int NUM_OF_AGENT = 2;
 	// fields
@@ -177,6 +180,18 @@ public class Grid extends Panel implements Serializable {
 	 */
 	public void setFinalPathCell(int x, int y) {
 		this._grid[x][y].set_status(Status.Path);
+		repaint();
+	}
+	
+	/**
+	 * set the cell in x,y to be part of the final path
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setFinalPathCell(int x, int y, int agentNum) {
+		this._grid[x][y].set_status(Status.Path);
+		this._grid[x][y].set_agent(agentNum);
 		repaint();
 	}
 
@@ -378,15 +393,15 @@ public class Grid extends Panel implements Serializable {
 		}
 	}
 
-	public void drawFinalPath(Vector<Vector<myPoint>> finalPath) {
+	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
 		for (int i = 0; i < finalPath.size(); i++) {
 			Vector<myPoint> tStep = finalPath.elementAt(i);
 			for (myPoint p : tStep){
 				setFinalPathCell(p.getX(), p.getY());
 			}
 		}
-
 	}
+	
 
 	public void clear() {
 		for (int i = 0; i < get_height(); i++) {

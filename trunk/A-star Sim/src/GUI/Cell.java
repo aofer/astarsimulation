@@ -8,6 +8,7 @@ import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -22,6 +23,11 @@ import algorithms.myPoint;
 public class Cell extends Component {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static enum Status {
 		Empty, Start, Finish, Blocked, inOpenList, inClosedList,Path;
 	}
@@ -33,11 +39,13 @@ public class Cell extends Component {
 	private double _distFromFinish;
 	private double _cost;
 	private mainFrame _main;
+	private int _agnetNum;
 
 	// Constructor
 	public Cell(myPoint point,mainFrame main) {
 		this._main=main;
 		this._position = point;
+		this._agnetNum=0;
 		init();
 	}
 
@@ -45,6 +53,7 @@ public class Cell extends Component {
 	public Cell(myPoint p, boolean block,mainFrame main) {
 		this._main=main;
 		this._position = p;
+		this._agnetNum=0;
 		init();
 		this.set_status(Status.Blocked);
 	}
@@ -126,7 +135,7 @@ public class Cell extends Component {
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics g) {	
 		Dimension size = getSize();
 		if (this._status == Status.Empty) {
 			g.setColor(Color.white);
@@ -146,15 +155,20 @@ public class Cell extends Component {
 		if (this._status == Status.inClosedList) {
 			g.setColor(Color.darkGray);
 		}
-		if (this._status == Status.Path) {
+		if (this._status == Status.Path ) {
 			g.setColor(Color.blue);
 		}
-		g.fillRect(0, 0, size.width, size.height);
-		
-		g.setColor(Color.black);
-		//String sCost = "-1";	
-        //g.drawString(sCost, 0, 0);	
-		g.drawRect(0, 0, size.width - 1, size.height - 1);
+		g.fillRect(0, 0, size.width, size.height);	
+		if (this._agnetNum ==1){
+			g.setColor(Color.orange);
+		}
+		else if (this._agnetNum ==2){
+			g.setColor(Color.cyan);
+		}
+		g.setColor(Color.black);	
+		//g.setFont(new Font("sansserif", Font.BOLD, 13));
+		//g.drawString(Double.toString(this._cost),5,15);
+		g.drawRect(0, 0, size.width - 2, size.height - 2);
 	}
 
 	@Override
@@ -196,6 +210,11 @@ public class Cell extends Component {
 		Object obj = event.getSource();
 		Cell c = ((Cell) obj);
 		return c;
+	}
+
+	public void set_agent(int agentNum) {
+		this._agnetNum = agentNum;
+		
 	}
 
 }// end of class Cell
