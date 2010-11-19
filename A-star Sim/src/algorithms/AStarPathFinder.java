@@ -2,8 +2,6 @@ package algorithms;
 
 import heuristics.HeuristicInterface;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.PriorityQueue;
 import java.util.Vector;
 

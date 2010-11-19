@@ -4,17 +4,14 @@ import java.util.Vector;
 
 import junit.framework.TestCase;
 
-import heuristics.ManhattanHeuristic;
 import maps.Mover;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import test.moverStub;
 
-import algorithms.AStarPathFinder;
 import algorithms.myPoint;
 
 

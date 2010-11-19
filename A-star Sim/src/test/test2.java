@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import algorithms.AStarPathFinder;
 import algorithms.myPoint;
-import algorithms.State;
 import maps.Mover;
 import maps.TileStatus;
 import maps.TiledMapImpl;

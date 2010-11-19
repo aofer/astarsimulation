@@ -3,8 +3,6 @@ package Controller;
 import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Vector;
 
 import test.moverStub;
@@ -13,21 +11,21 @@ import maps.Mover;
 import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
-import Simulation.Simulator;
 import Simulation.mainFrame;
-import algorithms.AStarPathFinder;
-import algorithms.PathFinderInterface;
 import algorithms.myPoint;
 
 public class Controller implements ControllerInterFace {
-	private AStarPathFinder _pathFinder;
+	//private AStarPathFinder _pathFinder;
 	private TileBasedMap _map;
 	private HeuristicInterface _heuristic;
+	private mainFrame _mainFrame;
+	private AStarPathFinderWorker _findPathWorker ;
 	
-	public Controller(){
+	public Controller(mainFrame main){
 		this._map = new TiledMapImpl(10, 10, false);
 		this._heuristic = new ManhattanHeuristic();
-		this._pathFinder = new AStarPathFinder(this._map, this._heuristic);
+		this._mainFrame = main;
+		//this._pathFinder = new AStarPathFinder(this._map, this._heuristic);
 		
 	}
 	
@@ -41,7 +39,14 @@ public class Controller implements ControllerInterFace {
 			Mover m = new moverStub();
 			movers.add(m);
 		}
-		return this._pathFinder.findPath(movers, starts, ends);
+		
+		this.set_findPathWorker(new AStarPathFinderWorker(this._mainFrame,starts, ends, movers, _map, _heuristic));
+		try {
+			this.get_findPathWorker().execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 
 	
@@ -56,6 +61,14 @@ public class Controller implements ControllerInterFace {
 			res.add(arr[i]);
 		}
 		return res;
+	}
+
+	public void set_findPathWorker(AStarPathFinderWorker _findPathWorker) {
+		this._findPathWorker = _findPathWorker;
+	}
+
+	public AStarPathFinderWorker get_findPathWorker() {
+		return _findPathWorker;
 	}
 
 	

@@ -3,7 +3,6 @@ package maps;
 import java.util.Vector;
 
 import algorithms.myPoint;
-import algorithms.State;
 
 /**
  * The description for the data we're pathfinding over. This provides the contract

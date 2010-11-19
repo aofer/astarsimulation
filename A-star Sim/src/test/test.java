@@ -5,12 +5,9 @@ import heuristics.ManhattanHeuristic;
 import java.util.Vector;
 
 import algorithms.AStarPathFinder;
-import algorithms.PathFinderInterface;
 import algorithms.myPoint;
 import algorithms.State;
 import maps.Mover;
-import maps.TileBasedMap;
-import maps.TileStatus;
 import maps.TiledMapImpl;
 
 public class test {
