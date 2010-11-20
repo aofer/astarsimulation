@@ -416,13 +416,10 @@ public class Grid extends Panel {
 				
 			}
 		}
-		for (int i = 0; i < NUM_OF_AGENT; i++) {
-			this._starts[i] = null;
-			this._ends[i] = null;
-		}
+		this._starts  = new myPoint[NUM_OF_AGENT];
+		this._ends  = new myPoint[NUM_OF_AGENT];
 		this._blockList.removeAllElements();
-		this._openList.removeAllElements();
-		this._closedList.removeAllElements();
+
 	}
 
 	public void drawOneStep(Vector<myPoint> tStep) {

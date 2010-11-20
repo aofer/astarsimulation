@@ -250,6 +250,7 @@ public class mainFrame extends JFrame {
 		this._finalPaths = null;
 		this._bStart.setEnabled(true);
 		this._bStep.setEnabled(true);
+		this._stepPressed = false;
 	}
 
 	public String getCommand() {
@@ -293,9 +294,9 @@ public class mainFrame extends JFrame {
 				} else {
 					mainFrame.this.get_grid().drawFinalPaths(
 							pathFinder.get_finalPath());
+					mainFrame.this._bStart.setEnabled(true);
 				}
 				mainFrame.this._bClear.setEnabled(true);
-				mainFrame.this._bStart.setEnabled(true);
 				mainFrame.this._bStep.setEnabled(true);
 			}
 
