@@ -9,6 +9,9 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import java.util.Vector;
 
 import GUI.Cell.Status;
@@ -19,13 +22,13 @@ import algorithms.myPoint;
  * 
  * @author Liron Katav
  */
-public class Grid extends Panel  {
+public class Grid extends Panel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public final static int LENGHT = 10;
+	public final static int LENGHT = 20;
 	public final static int NUM_OF_AGENT = 2;
 	// fields
 	private int _width = LENGHT;
@@ -149,10 +152,10 @@ public class Grid extends Panel  {
 		this._grid[x][y].set_status(Status.inOpenList);
 		repaint();
 	}
-	
-	public void setOpenListCell(Vector<myPoint> points ){
-		for (myPoint p : points){
-			this.setOpenListCell(p.getX(),p.getY());
+
+	public void setOpenListCell(Vector<myPoint> points) {
+		for (myPoint p : points) {
+			this.setOpenListCell(p.getX(), p.getY());
 		}
 	}
 
@@ -167,11 +170,12 @@ public class Grid extends Panel  {
 		repaint();
 	}
 
-	public void setClosedListCell(Vector<myPoint> points ){
-		for (myPoint p : points){
-			this.setClosedListCell(p.getX(),p.getY());
+	public void setClosedListCell(Vector<myPoint> points) {
+		for (myPoint p : points) {
+			this.setClosedListCell(p.getX(), p.getY());
 		}
 	}
+
 	/**
 	 * set the cell in x,y to be part of the final path
 	 * 
@@ -180,9 +184,9 @@ public class Grid extends Panel  {
 	 */
 	public void setFinalPathCell(int x, int y) {
 		this._grid[x][y].set_status(Status.Path);
-		repaint();
+		repaint(0);
 	}
-	
+
 	/**
 	 * set the cell in x,y to be part of the final path
 	 * 
@@ -396,26 +400,37 @@ public class Grid extends Panel  {
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
 		for (int i = 0; i < finalPath.size(); i++) {
 			Vector<myPoint> tStep = finalPath.elementAt(i);
-			for (myPoint p : tStep){
-				setFinalPathCell(p.getX(), p.getY());
+			for (int j=0; j< tStep.size(); j++){
+				myPoint p = tStep.elementAt(j); 
+				setFinalPathCell(p.getX(), p.getY(),j+1);
+			
 			}
 		}
 	}
-	
 
 	public void clear() {
 		for (int i = 0; i < get_height(); i++) {
 			for (int j = 0; j < get_width(); j++) {
-				setEmptyCell(i,j);	
+				setEmptyCell(i, j);
+				this._grid[i][j].set_agent(0);
+				
 			}
 		}
 		for (int i = 0; i < NUM_OF_AGENT; i++) {
-			this._starts[i]=null;
-			this._ends[i]=null;
+			this._starts[i] = null;
+			this._ends[i] = null;
 		}
 		this._blockList.removeAllElements();
 		this._openList.removeAllElements();
 		this._closedList.removeAllElements();
+	}
+
+	public void drawOneStep(Vector<myPoint> tStep) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			setFinalPathCell(p.getX(), p.getY(),j+1);
+		
+		}
 	}
 
 }// end of class

@@ -155,16 +155,13 @@ public class Cell extends Component {
 		if (this._status == Status.inClosedList) {
 			g.setColor(Color.darkGray);
 		}
-		if (this._status == Status.Path ) {
+		if (this._status == Status.Path && this._agnetNum ==1) {
 			g.setColor(Color.blue);
 		}
-		g.fillRect(0, 0, size.width, size.height);	
-		if (this._agnetNum ==1){
-			g.setColor(Color.orange);
-		}
-		else if (this._agnetNum ==2){
+		if (this._status == Status.Path && this._agnetNum ==2) {
 			g.setColor(Color.cyan);
 		}
+		g.fillRect(0, 0, size.width, size.height);	
 		g.setColor(Color.black);	
 		//g.setFont(new Font("sansserif", Font.BOLD, 13));
 		//g.drawString(Double.toString(this._cost),5,15);
@@ -216,6 +213,7 @@ public class Cell extends Component {
 		this._agnetNum = agentNum;
 		
 	}
+
 
 }// end of class Cell
 

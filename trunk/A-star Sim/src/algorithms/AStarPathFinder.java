@@ -2,8 +2,17 @@ package algorithms;
 
 import heuristics.HeuristicInterface;
 
+import java.util.Observable;
 import java.util.PriorityQueue;
 import java.util.Vector;
+
+import Events.ApplicationEvent;
+import Events.ApplicationEventListener;
+import Events.ApplicationEventListenerCollection;
+import Events.ApplicationEventSource;
+import Events.ClosedListChangeEvent;
+import Events.OpenListChangeEvent;
+import Events.finalPathEvent;
 
 
 import maps.Mover;
@@ -16,13 +25,14 @@ import maps.TileBasedMap;
  * @author amit
  * 
  */
-public class AStarPathFinder implements PathFinderInterface{
+public class AStarPathFinder implements PathFinderInterface,ApplicationEventSource{
 
 	private TileBasedMap _map;
 	private Vector<State> _closedList;
 	private PriorityQueue<State> _openList;
 	private HeuristicInterface _heuristic;
-
+	private ApplicationEventListenerCollection _listeners;
+	private Vector<Vector<myPoint>> _finalPath;
 	/**
 	 * constructor
 	 * 
@@ -34,7 +44,8 @@ public class AStarPathFinder implements PathFinderInterface{
 		this._heuristic = heuristic;
 		this._closedList = new Vector<State>();
 		this._openList = new PriorityQueue<State>();
-
+		this._finalPath = null;
+		this._listeners = new ApplicationEventListenerCollection();
 	}
 
 	@Override
@@ -50,6 +61,7 @@ public class AStarPathFinder implements PathFinderInterface{
 		State finalState = new State(ends);
 		State current = null;
 		this._openList.add(initialState);
+		this._listeners.fireEvent(new OpenListChangeEvent(this,initialState.get_Coordinates()));
 		while (this._openList.size() != 0) {
 			current = this._openList.poll();
 			System.out.println(current.toString());
@@ -57,31 +69,32 @@ public class AStarPathFinder implements PathFinderInterface{
 				break;
 			}
 			this._closedList.add(current);
+			this._listeners.fireEvent(new ClosedListChangeEvent(this,current.get_Coordinates()));
 			Vector<State> neighbours = getNeighbours(current, movers);
 			for (State neighbour : neighbours) {
 				float nextStepCost = current.get_cost()
 						+ getMovementCost(movers, current, neighbour);
 				if (nextStepCost < neighbour.get_cost()) {
-					if (this._openList.contains(neighbour)) { // might not work
-						this._openList.remove(neighbour); // might not work
+					if (this._openList.contains(neighbour)) { 
+						this._openList.remove(neighbour); 
 					}
 					if (this._closedList.contains(neighbour)) {
 						this._closedList.remove(neighbour);
 					}
 				}
 				if (!this._openList.contains(neighbour)
-						&& !this._closedList.contains(neighbour)) { // might not
-																	// work
+						&& !this._closedList.contains(neighbour)) { 
+																	
 					neighbour.set_cost(nextStepCost);
 					neighbour.set_heuristic(getHeuristicCost(movers,
 							neighbour.get_Coordinates(), ends));
 					neighbour.set_parent(current);
-					this._openList.add(neighbour);	
+					this._openList.add(neighbour);
+					this._listeners.fireEvent(new OpenListChangeEvent(this,neighbour.get_Coordinates()));
 				}
 
 			}
 		}
-		// TODO pathfinding and reconsturcting after the algorithm finished
 		Vector<Vector<myPoint>> path = new Vector<Vector<myPoint>>();
 		if (current != null && current.equals(finalState)) {
 			while (!current.equals(initialState)) {
@@ -90,8 +103,14 @@ public class AStarPathFinder implements PathFinderInterface{
 			}
 
 		}
+		this._finalPath = path;
+		this._listeners.fireEvent(new finalPathEvent(this));
 		return path;
 	}
+
+	
+
+	
 
 	/**
 	 * returns the heuristic cost from the state with start positions start to
@@ -196,29 +215,6 @@ public class AStarPathFinder implements PathFinderInterface{
 	}
 
 	
-	/*
-	 * 	private boolean checkIfLegal(State current, myPoint p, State s) {
-		boolean ans = true;
-		Vector<myPoint> tCoordinates = s.get_Coordinates();
-		for (myPoint tPoint : tCoordinates) {
-			if (!checkIfLegal(p, tPoint)) {
-				ans = false;
-				break;
-			}
-		}
-		return ans;
-	}
-	 *//*
-	private boolean checkIfLegal(myPoint p1, myPoint p2) {
-		boolean ans = true;
-		// check if the points are equal - meaning the two agents are on the
-		// same tile
-		if (p1.equals(p2))
-			ans = false;
-		// else if ()
-		return ans;
-	}
-*/
 	/**
 	 * returns the path for a specific agent
 	 */
@@ -233,5 +229,26 @@ public class AStarPathFinder implements PathFinderInterface{
 		}
 		return path;
 	}
-	
+
+	@Override
+	public void addListener(ApplicationEventListener listener) {
+		this._listeners.add(listener);
+		
+	}
+
+	@Override
+	public void clearListeners() {
+		this._listeners.clear();
+		
+	}
+
+	@Override
+	public void removeListener(ApplicationEventListener listener) {
+		this._listeners.remove(listener);
+	}
+
+
+	public Vector<Vector<myPoint>> get_finalPath() {
+		return _finalPath;
+	}
 }

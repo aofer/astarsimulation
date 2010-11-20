@@ -13,7 +13,7 @@ public interface ControllerInterFace {
 	 * @param _blocked
 	 * @return
 	 */
-	public Vector<Vector<myPoint>> findPath(myPoint[] startPoints,
+	public void findPath(myPoint[] startPoints,
 									myPoint[] endPoints, 
 									Vector<myPoint> _blocked);
 
