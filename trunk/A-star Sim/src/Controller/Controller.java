@@ -121,4 +121,9 @@ public class Controller implements ControllerInterFace,ApplicationEventSource{
 			Controller.this._pathFinder.findPath(this._movers, this._starts, this._ends);
 		}
 	}
+
+	public void ClearPathFinder() {
+		this._pathFinder = new AStarPathFinder(this._map,new ManhattanHeuristic());
+		
+	}
 }

@@ -105,6 +105,8 @@ public class AStarPathFinder implements PathFinderInterface,ApplicationEventSour
 		}
 		this._finalPath = path;
 		this._listeners.fireEvent(new finalPathEvent(this));
+		this._closedList.clear();
+		this._openList.clear();
 		return path;
 	}
 
