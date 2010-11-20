@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import Simulation.mainFrame;
+import GUI.mainFrame;
 
 
 public class GridTest {

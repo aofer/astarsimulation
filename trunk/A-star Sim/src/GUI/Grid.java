@@ -8,21 +8,21 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.Vector;
 
 import GUI.Cell.Status;
-import Simulation.mainFrame;
 import algorithms.myPoint;
 
 /**
  * 
  * @author Liron Katav
  */
-public class Grid extends Panel {
+public class Grid extends JPanel {
 
 	/**
 	 * 
@@ -425,9 +425,16 @@ public class Grid extends Panel {
 	public void drawOneStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			setFinalPathCell(p.getX(), p.getY(),j+1);
-		
+			setFinalPathCell(p.getX(), p.getY(),j+1);	
 		}
+	}
+
+	public void setEmptyStep(Vector<myPoint> tStep) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			setEmptyCell(p.getX(), p.getY());	
+		}
+		
 	}
 
 }// end of class
