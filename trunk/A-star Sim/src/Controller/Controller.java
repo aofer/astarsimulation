@@ -3,8 +3,6 @@ package Controller;
 import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Vector;
 
 import test.moverStub;
@@ -22,7 +20,6 @@ import Events.OpenListChangeEvent;
 import Events.finalPathEvent;
 import GUI.mainFrame;
 import algorithms.AStarPathFinder;
-import algorithms.State;
 import algorithms.myPoint;
 
 public class Controller implements ControllerInterFace,ApplicationEventSource{
