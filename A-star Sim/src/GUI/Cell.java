@@ -13,7 +13,6 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import Simulation.mainFrame;
 import algorithms.myPoint;
 
 /**
@@ -161,7 +160,7 @@ public class Cell extends Component {
 		if (this._status == Status.Path && this._agnetNum ==2) {
 			g.setColor(Color.cyan);
 		}
-		g.fillRect(0, 0, size.width, size.height);	
+		g.fillRect(0, 0, size.width-1, size.height-1);	
 		g.setColor(Color.black);	
 		//g.setFont(new Font("sansserif", Font.BOLD, 13));
 		//g.drawString(Double.toString(this._cost),5,15);

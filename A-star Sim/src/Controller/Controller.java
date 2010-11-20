@@ -20,7 +20,7 @@ import Events.ApplicationEventSource;
 import Events.ClosedListChangeEvent;
 import Events.OpenListChangeEvent;
 import Events.finalPathEvent;
-import Simulation.mainFrame;
+import GUI.mainFrame;
 import algorithms.AStarPathFinder;
 import algorithms.State;
 import algorithms.myPoint;
@@ -78,10 +78,12 @@ public class Controller implements ControllerInterFace,ApplicationEventSource{
 				Controller.this._listeners.fireEvent(event);
 			}
 			else if (event instanceof OpenListChangeEvent){
-				Controller.this._mainFrame.get_grid().setOpenListCell(((OpenListChangeEvent)event).get_points());
+				Controller.this._listeners.fireEvent(event);
+				//Controller.this._mainFrame.get_grid().setOpenListCell(((OpenListChangeEvent)event).get_points());
 			}
 			else if(event instanceof ClosedListChangeEvent){
-				Controller.this._mainFrame.get_grid().setClosedListCell(((ClosedListChangeEvent)event).get_points());
+				Controller.this._listeners.fireEvent(event);
+				//Controller.this._mainFrame.get_grid().setClosedListCell(((ClosedListChangeEvent)event).get_points());
 			}
 
 		}
