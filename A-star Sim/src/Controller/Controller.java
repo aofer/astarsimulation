@@ -29,6 +29,7 @@ public class Controller implements ControllerInterFace,ApplicationEventSource{
 	private mainFrame _mainFrame;
 	private ApplicationEventListenerCollection _listeners;
 	private pathFinderThread _thread;
+	
 	public Controller(mainFrame main) {
 		this._map = new TiledMapImpl(20, 20, false);
 		this._heuristic = new ManhattanHeuristic();
