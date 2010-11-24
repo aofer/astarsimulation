@@ -41,25 +41,24 @@ import algorithms.myPoint;
  * 
  * @author Liron Katav
  */
-public class mainFrame extends JFrame implements ActionListener, ItemListener{
+public class mainFrame extends JFrame implements ActionListener, ItemListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel _selectionPanel;
-	public 	JPanel __mainPanel;
+	public JPanel __mainPanel;
 	private JPanel _contorlPanel;
 	private JRadioButton _rBlock, _rStart, _rEnd;
 	private ButtonGroup _selectionGroup;
 	private JComboBox _AgentBox;
 	private JButton _bStart, _bStop, _bStep, _bClear;
 	private JMenuBar _menuBar;
-	private JMenu _FileMenu,_ViewMenu,_helpMenu;
-	private JMenuItem _openItem,_saveItem,_exitItem;
-	private JCheckBoxMenuItem _FinalPathsItem,_openListItem,_closedListItem;
-	private boolean _showFinalPath,_showOpenList,_showClosedList;
+	private JMenu _FileMenu, _ViewMenu, _helpMenu;
+	private JMenuItem _openItem, _saveItem, _exitItem;
+	private JCheckBoxMenuItem _FinalPathsItem, _openListItem, _closedListItem;
+	private boolean _showFinalPath, _showOpenList, _showClosedList;
 
-	
 	String[] agentsStrings = { "Agent1", "Agent2" };
 	private Grid _grid;
 	private Controller _controller;
@@ -95,7 +94,6 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 		this._showOpenList = false;
 		this._showClosedList = false;
 
-		
 		_menuBar.add(_FileMenu);
 		_openItem = new JMenuItem("Open");
 		_FileMenu.add(_openItem);
@@ -104,7 +102,6 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 		_exitItem = new JMenuItem("Exit");
 		_FileMenu.add(_exitItem);
 
-		
 		_menuBar.add(_ViewMenu);
 		_FinalPathsItem = new JCheckBoxMenuItem("Show Final Paths");
 		_ViewMenu.add(_FinalPathsItem);
@@ -112,11 +109,9 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 		_ViewMenu.add(_openListItem);
 		_closedListItem = new JCheckBoxMenuItem("Show Closed List");
 		_ViewMenu.add(_closedListItem);
-		
+
 		_menuBar.add(_helpMenu);
 
-		
-		
 		_selectionGroup = new ButtonGroup();
 		_rBlock = new JRadioButton("Block");
 		_rStart = new JRadioButton("Start Point");
@@ -143,8 +138,8 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 						.addComponent(_rEnd).addComponent(_rBlock)));
 
 		layout.setVerticalGroup(layout.createSequentialGroup().addGap(50)
-				.addComponent(_AgentBox).addComponent(_rStart).addComponent(
-						_rEnd).addComponent(_rBlock).addGap(350));
+				.addComponent(_AgentBox).addComponent(_rStart)
+				.addComponent(_rEnd).addComponent(_rBlock).addGap(350));
 
 		_contorlPanel.add(_bStart);
 		_contorlPanel.add(_bStop);
@@ -158,10 +153,6 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 		__mainPanel.add(get_grid(), BorderLayout.CENTER);
 		__mainPanel.add(_contorlPanel, BorderLayout.SOUTH);
 		this.setJMenuBar(_menuBar);
-
-		
-		
-		
 
 		this._rStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -211,13 +202,13 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 			}
 		});
 
-		_openItem.addActionListener( this);
-		_saveItem.addActionListener( this);
-		_exitItem.addActionListener( this);
-		_FinalPathsItem.addItemListener( this);
-		_openListItem.addItemListener( this);
-		_closedListItem.addItemListener( this);
-		//_helpMenu.addActionListener( this);
+		_openItem.addActionListener(this);
+		_saveItem.addActionListener(this);
+		_exitItem.addActionListener(this);
+		_FinalPathsItem.addItemListener(this);
+		_openListItem.addItemListener(this);
+		_closedListItem.addItemListener(this);
+		// _helpMenu.addActionListener( this);
 	}
 
 	public void set_grid(Grid _grid) {
@@ -263,7 +254,7 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 	}
 
 	private void bStopActionPerformed(ActionEvent evt) {
-		if (this._controller.getThread() != null){
+		if (this._controller.getThread() != null) {
 			this._controller.getThread().stop();
 		}
 		this._bClear.setEnabled(true);
@@ -280,23 +271,27 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 				this.get_controller().findPath(this.get_grid().get_starts(),
 						this.get_grid().get_ends(),
 						this.get_grid().get_blockList());
-			}
-			if (this._stepNum < this._finalPaths.size()) {
-				Vector<myPoint> tstep = this._finalPaths
-						.elementAt(this._finalPaths.size() - this._stepNum - 1);
-				
-				if (this.get_showFinalPath() == false){
-					Vector<myPoint> prevStep = mainFrame.this._finalPaths
-					.elementAt(mainFrame.this._finalPaths.size() - mainFrame.this._stepNum );
-					for (myPoint p: prevStep){
-						mainFrame.this.get_grid().setEmptyCell(p.getX(),p.getY());
-					}
-				}
-				this.get_grid().drawOneStep(tstep);
-				this._stepNum++;
 			} else {
-				JOptionPane.showMessageDialog(this, "No more steps", "Error",
-						JOptionPane.INFORMATION_MESSAGE);
+				if (this._stepNum < this._finalPaths.size()) {
+					Vector<myPoint> tstep = this._finalPaths
+							.elementAt(this._finalPaths.size() - this._stepNum
+									- 1);
+
+					if (this.get_showFinalPath() == false) {
+						Vector<myPoint> prevStep = mainFrame.this._finalPaths
+								.elementAt(mainFrame.this._finalPaths.size()
+										- mainFrame.this._stepNum);
+						for (myPoint p : prevStep) {
+							mainFrame.this.get_grid().setEmptyCell(p.getX(),
+									p.getY());
+						}
+					}
+					this.get_grid().drawOneStep(tstep);
+					this._stepNum++;
+				} else {
+					JOptionPane.showMessageDialog(this, "No more steps",
+							"Error", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		} else {
 			JOptionPane.showMessageDialog(this,
@@ -333,72 +328,58 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 		return _controller;
 	}
 
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		JMenuItem source = (JMenuItem)(event.getSource());
-		if(source == this._openItem){
+		JMenuItem source = (JMenuItem) (event.getSource());
+		if (source == this._openItem) {
 			System.out.println("save clicked");
 			openItemClicked();
-		}
-		else if(source == this._saveItem){
+		} else if (source == this._saveItem) {
 			System.out.println("save clicked");
 			saveItemClicked();
-		}
-		else if(source == this._exitItem){
+		} else if (source == this._exitItem) {
 			System.out.println("exit clicked");
 			exitItemClicked();
 		}
 	}
 
-	
-
-
 	@Override
 	public void itemStateChanged(ItemEvent event) {
-		JMenuItem source = (JMenuItem)(event.getSource());
-		if(source == this._FinalPathsItem){
-			if (event.getStateChange() == ItemEvent.SELECTED){
+		JMenuItem source = (JMenuItem) (event.getSource());
+		if (source == this._FinalPathsItem) {
+			if (event.getStateChange() == ItemEvent.SELECTED) {
 				this._showFinalPath = true;
-			}
-			else {
+			} else {
 				this._showFinalPath = false;
 			}
-		}
-		else if(source == this._openListItem){
-			if (event.getStateChange() == ItemEvent.SELECTED){
+		} else if (source == this._openListItem) {
+			if (event.getStateChange() == ItemEvent.SELECTED) {
 				this._showOpenList = true;
-			}
-			else {
+			} else {
 				this._showOpenList = false;
 			}
-		}
-		else if(source == this._closedListItem){
-			if (event.getStateChange() == ItemEvent.SELECTED){
+		} else if (source == this._closedListItem) {
+			if (event.getStateChange() == ItemEvent.SELECTED) {
 				this._showClosedList = true;
-			}
-			else {
+			} else {
 				this._showClosedList = false;
 			}
-		}		
+		}
 	}
-	
-	
+
 	private void openItemClicked() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void exitItemClicked() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	private void saveItemClicked() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 
 	/**
 	 * @return the _showFinalPath
@@ -406,14 +387,14 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 	public boolean get_showFinalPath() {
 		return this._showFinalPath;
 	}
-	
+
 	/**
 	 * @return the _showFinalPath
 	 */
 	public boolean get_showOpenList() {
 		return this._showOpenList;
 	}
-	
+
 	/**
 	 * @return the _showFinalPath
 	 */
@@ -429,55 +410,62 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener{
 				AStarPathFinder pathFinder = (AStarPathFinder) event
 						.getSource();
 				mainFrame.this._finalPaths = pathFinder.get_finalPath();
-				if (mainFrame.this._finalPaths.isEmpty()){
-					JOptionPane.showMessageDialog(mainFrame.this, "There is no path", "no path",
+				if (mainFrame.this._finalPaths.isEmpty()) {
+					JOptionPane.showMessageDialog(mainFrame.this,
+							"There is no path", "no path",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				if (mainFrame.this._stepPressed) {
-					if (mainFrame.this._stepNum < mainFrame.this._finalPaths.size()) {
+					if (mainFrame.this._stepNum < mainFrame.this._finalPaths
+							.size()) {
 						Vector<myPoint> tstep = mainFrame.this._finalPaths
-								.elementAt(mainFrame.this._finalPaths.size() - mainFrame.this._stepNum - 1);
+								.elementAt(mainFrame.this._finalPaths.size()
+										- mainFrame.this._stepNum - 1);
 						mainFrame.this.get_grid().drawOneStep(tstep);
 						mainFrame.this._stepNum++;
-					} 
+					}
 					mainFrame.this._stepPressed = false;
 				} else {
-					if (mainFrame.this.get_showFinalPath() == true){
-						mainFrame.this.get_grid().drawFinalPaths(pathFinder.get_finalPath());
-					}
-					else{
-						/*for(int i=0; i<pathFinder.get_finalPath().size()-1; i++){
-							Vector<myPoint> tstep = mainFrame.this._finalPaths.elementAt(mainFrame.this._finalPaths.size() - i -1);
-							Vector<myPoint> PrevStep = mainFrame.this._finalPaths.elementAt(mainFrame.this._finalPaths.size() - i);
-							mainFrame.this.get_grid().drawOneStep(tstep);
-							mainFrame.this.get_grid().setEmptyStep(PrevStep);
-							//delay
-							
-						}*/
-						mainFrame.this.get_grid().drawFinalPaths(pathFinder.get_finalPath());
+					if (mainFrame.this.get_showFinalPath() == true) {
+						mainFrame.this.get_grid().drawFinalPaths(
+								pathFinder.get_finalPath());
+					} else {
+						/*
+						 * for(int i=0; i<pathFinder.get_finalPath().size()-1;
+						 * i++){ Vector<myPoint> tstep =
+						 * mainFrame.this._finalPaths
+						 * .elementAt(mainFrame.this._finalPaths.size() - i -1);
+						 * Vector<myPoint> PrevStep =
+						 * mainFrame.this._finalPaths.
+						 * elementAt(mainFrame.this._finalPaths.size() - i);
+						 * mainFrame.this.get_grid().drawOneStep(tstep);
+						 * mainFrame.this.get_grid().setEmptyStep(PrevStep);
+						 * //delay
+						 * 
+						 * }
+						 */
+						mainFrame.this.get_grid().drawFinalPaths(
+								pathFinder.get_finalPath());
 					}
 					mainFrame.this._bStart.setEnabled(true);
 				}
 				mainFrame.this._bClear.setEnabled(true);
 				mainFrame.this._bStep.setEnabled(true);
-			}
-			else if(event instanceof OpenListChangeEvent){
-				if (mainFrame.this.get_showOpenList() == true){
-					mainFrame.this.get_grid().setOpenListCell(((OpenListChangeEvent)event).get_points());
-				}				
-			}
-			else if (event instanceof ClosedListChangeEvent){
-				if (mainFrame.this.get_showClosedList() == true){
-					mainFrame.this.get_grid().setClosedListCell(((ClosedListChangeEvent)event).get_points());
+			} else if (event instanceof OpenListChangeEvent) {
+				if (mainFrame.this.get_showOpenList() == true) {
+					mainFrame.this.get_grid().setOpenListCell(
+							((OpenListChangeEvent) event).get_points());
+				}
+			} else if (event instanceof ClosedListChangeEvent) {
+				if (mainFrame.this.get_showClosedList() == true) {
+					mainFrame.this.get_grid().setClosedListCell(
+							((ClosedListChangeEvent) event).get_points());
 				}
 			}
-				
 
 		}
 
 	}
 
-	
-	
 }// end of class
 
