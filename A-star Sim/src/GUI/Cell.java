@@ -170,7 +170,7 @@ public class Cell extends Component {
 	@Override
 	public void processMouseEvent(MouseEvent event) {
 		super.processMouseEvent(event);
-		if (event.getID() == MouseEvent.MOUSE_CLICKED) {
+		if (event.getID() == MouseEvent.MOUSE_PRESSED) {
 			myPoint p = getPointFromSource(event);
 			int agent = getAgentNumber();
 			String command = getCommand();
