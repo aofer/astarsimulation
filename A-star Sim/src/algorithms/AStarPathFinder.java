@@ -64,7 +64,7 @@ public class AStarPathFinder implements PathFinderInterface,ApplicationEventSour
 		this._listeners.fireEvent(new OpenListChangeEvent(this,initialState.get_Coordinates()));
 		while (this._openList.size() != 0) {
 			current = this._openList.poll();
-			System.out.println(current.toString());
+		//	System.out.println(current.toString());
 			if (current.equals(finalState)) {
 				break;
 			}
