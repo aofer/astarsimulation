@@ -2,6 +2,7 @@ package algorithms;
 
 import heuristics.HeuristicInterface;
 
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.PriorityQueue;
 import java.util.Vector;
@@ -28,7 +29,8 @@ import maps.TileBasedMap;
 public class AStarPathFinder implements PathFinderInterface,ApplicationEventSource{
 
 	private TileBasedMap _map;
-	private Vector<State> _closedList;
+	//private Vector<State> _closedList;
+	private HashSet<State> _closedList;
 	private PriorityQueue<State> _openList;
 	private HeuristicInterface _heuristic;
 	private ApplicationEventListenerCollection _listeners;
@@ -42,7 +44,8 @@ public class AStarPathFinder implements PathFinderInterface,ApplicationEventSour
 	public AStarPathFinder(TileBasedMap map, HeuristicInterface heuristic) {
 		this._map = map;
 		this._heuristic = heuristic;
-		this._closedList = new Vector<State>();
+	//	this._closedList = new Vector<State>();
+		this._closedList = new HashSet<State>();
 		this._openList = new PriorityQueue<State>();
 		this._finalPath = null;
 		this._listeners = new ApplicationEventListenerCollection();

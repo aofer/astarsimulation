@@ -77,7 +77,15 @@ public class State implements Comparable<State> {
 			return 0;
 		}
 	}
-
+	@Override
+	public int hashCode(){
+		int ans = 0;
+		for (int i = 0 ; i < this._Coordinates.size();i++){
+			myPoint p = this._Coordinates.elementAt(i);
+			ans += p.getX() + p.getY();
+		}
+		return ans;
+	}
 	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof State)) {
